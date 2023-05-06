@@ -108,7 +108,7 @@ Project Contributor(s):
      <td align="left">21</td>
      <td align="left">22</td>
      <td align="left">23</td>
-     <td align="left">24<br><b>(*)</b></td>
+     <td align="left">24&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>(?)</b></td>
      <td align="left">25</td>
      <td align="left">26</td>
      <td align="left">27</td>
