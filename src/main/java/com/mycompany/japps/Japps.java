@@ -14,11 +14,11 @@ public class Japps extends JFrame{
     }
     
     public static int getGUIWidth() {
-        return 1500;
+        return 1000;
     }
     
     public static int getGUIHeight() {
-        return 1000;
+        return 500;
     }
     
     public static Color getJFrameColor() {
@@ -29,7 +29,6 @@ public class Japps extends JFrame{
         return new Color(0xa83332);
     }
     public static void main(String[] args) {
-    //new SplashPage();
-    new LoginPage();
+        new NewsLetter();
     }
 }
