@@ -70,8 +70,12 @@ public class NewsLetter extends JFrame{
     public JPanel createButtonsContent(String description) {
         JPanel panel = new JPanel();
         JButton btnTest = new JButton(description);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS)); 
+        panel.add(Box.createHorizontalGlue());
+        btnTest.setPreferredSize(new Dimension(300, 100)); 
         panel.add(btnTest);
-        panel.setBorder(BorderFactory.createEmptyBorder());
+        panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        panel.add(Box.createHorizontalGlue());
         return panel;
     }
     

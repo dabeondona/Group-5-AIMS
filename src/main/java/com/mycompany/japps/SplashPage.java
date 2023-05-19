@@ -14,31 +14,29 @@ import java.awt.*;
  * - Swing Offsets
  * - ImageIcons
  */
-public class SplashPage extends JFrame{
-    static JPanel cardPnl;
+public class SplashPage extends JPanel {
     JPanel splashPagePnl;
     JButton iconButton;
     
-    public SplashPage(){
-     this.setTitle(Japps.getGUIName());
-     JPanel cardPnl = new JPanel();
-     cardPnl.setName("cardPanel");
-     
+    public SplashPage(JPanel cardPanel, CardLayout cardLayout){    
      
      JPanel splashPagePnl = new JPanel();
      splashPagePnl.setLayout(new BorderLayout());
      
      JButton iconButton = new JButton(new ImageIcon("C://Users//ondon//Pictures//20210619_214454.jpg"));
      iconButton.setPreferredSize(new Dimension(100,50));
+     iconButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {  
+               
+               cardLayout.show(cardPanel, "login");        
+            }
     
-     
+     }); 
      splashPagePnl.add(iconButton, BorderLayout.CENTER);
      this.setLayout(new GridBagLayout()); 
-          
+     this.setBackground(Japps.getJFrameColor());
      this.add(splashPagePnl, new GridBagConstraints()); 
-     this.getContentPane().setBackground(Japps.getJFrameColor());
-     this.setSize(Japps.getGUIWidth(), Japps.getGUIHeight());
-     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-     this.setVisible(true);
     }
 }
+    

@@ -8,10 +8,9 @@ import java.awt.*;
  * - Java JDBC
  * - https://stackoverflow.com/questions/13368103/jpanel-drop-shadow
  */
-public class LoginPage extends JFrame{
+public class LoginPage extends JPanel{
     
     public LoginPage() {
-     this.setTitle(Japps.getGUIName());
      JPanel loginPagePnl = createLoginPagePnl();   
      JPanel samPnl = createSamPnl();
      loginPagePnl.add(samPnl, BorderLayout.NORTH);
@@ -25,15 +24,11 @@ public class LoginPage extends JFrame{
      forgotButton.setBorder(BorderFactory.createEmptyBorder());
      
      loginPagePnl.add(forgotButton, BorderLayout.SOUTH);
+     this.setBackground(Japps.getJFrameColor());
      this.setLayout(new GridBagLayout()); 
-     
-     this.add(loginPagePnl, new GridBagConstraints());
-     this.setSize(Japps.getGUIWidth(),Japps.getGUIHeight());
-     this.getContentPane().setBackground(Japps.getJFrameColor());
-     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-     this.setVisible(true);
+     this.add(loginPagePnl, new GridBagConstraints());  
     }
-    
+      
     public JPanel createLoginPagePnl() {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
