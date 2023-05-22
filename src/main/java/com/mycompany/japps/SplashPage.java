@@ -27,8 +27,7 @@ public class SplashPage extends JPanel {
      iconButton.setPreferredSize(new Dimension(100,50));
      iconButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {  
-               
+            public void actionPerformed(ActionEvent e) {       
                cardLayout.show(cardPanel, "login");        
             }
     
