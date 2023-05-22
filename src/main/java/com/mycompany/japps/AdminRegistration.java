@@ -32,7 +32,7 @@ public class AdminRegistration extends JPanel{
         adminRegPnl.add(createAdminPnl, BorderLayout.CENTER);
         
         JPanel panel = new JPanel();
-        panel.setBackground(Registration.getJPanelColor());
+        panel.setBackground(Japps.getJPanelColor());
         
         JButton btnSubmit = new JButton("Submit");
         btnSubmit.setFocusPainted(false);
@@ -88,7 +88,7 @@ public class AdminRegistration extends JPanel{
         
         adminRegPnl.add(panel, BorderLayout.SOUTH);
         
-        this.setBackground(Registration.getJFrameColor());
+        this.setBackground(Japps.getJFrameColor());
         this.setLayout(new GridBagLayout()); 
         this.add(adminRegPnl, new GridBagConstraints());  
         
@@ -101,7 +101,7 @@ public class AdminRegistration extends JPanel{
         javax.swing.border.Border padding = BorderFactory.createEmptyBorder(20,20,20,20);
         javax.swing.border.Border line = BorderFactory.createLineBorder(Color.BLACK, 1);
         javax.swing.border.Border border = BorderFactory.createCompoundBorder(line, padding);
-        panel.setBackground(Registration.getJFrameColor());
+        panel.setBackground(Japps.getJFrameColor());
         panel.setBorder(border);
         return panel;
     }
@@ -109,7 +109,7 @@ public class AdminRegistration extends JPanel{
     public JPanel createAdminPnl(){
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(6,1));
-        panel.setBackground(Registration.getJPanelColor());
+        panel.setBackground(Japps.getJPanelColor());
         
         JLabel lblJobTitle = new JLabel("Job Title:");
         lblJobTitle.setForeground(Color.WHITE);

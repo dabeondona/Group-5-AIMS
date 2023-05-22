@@ -21,8 +21,11 @@ public class Japps extends JFrame{
         SplashPage splashPnl = new SplashPage(cardPanel, cardLayout);    
         cardPanel.add(splashPnl, "splash");
         
-        LoginPage loginPnl = new LoginPage();  
+        LoginPage loginPnl = new LoginPage(cardPanel, cardLayout);  
         cardPanel.add(loginPnl, "login");   
+        
+        Registration registerPnl = new Registration();
+        cardPanel.add(registerPnl, "registerPnl");
         
         this.add(cardPanel);
         cardLayout.show(cardPanel, "splash");

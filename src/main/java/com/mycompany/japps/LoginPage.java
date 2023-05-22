@@ -10,7 +10,7 @@ import java.awt.*;
  */
 public class LoginPage extends JPanel{
     
-    public LoginPage() {
+    public LoginPage(JPanel cardPanel, CardLayout cardLayout) {
      JPanel loginPagePnl = createLoginPagePnl();   
      JPanel northPnl = createNorthPnl();
      loginPagePnl.add(northPnl, BorderLayout.NORTH);
@@ -18,7 +18,7 @@ public class LoginPage extends JPanel{
      JPanel centerPnl = createCenterPnl();   
      loginPagePnl.add(centerPnl, BorderLayout.CENTER);
      
-     JPanel southPnl = createSouthPnl();
+     JPanel southPnl = createSouthPnl(cardPanel, cardLayout);
      loginPagePnl.add(southPnl, BorderLayout.SOUTH);
      
      this.setBackground(Japps.getJFrameColor());
@@ -81,7 +81,7 @@ public class LoginPage extends JPanel{
         return panel;
     }
     
-    public JPanel createSouthPnl() {
+    public JPanel createSouthPnl(JPanel cardPanel, CardLayout cardLayout) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(2,1));
         
@@ -106,6 +106,13 @@ public class LoginPage extends JPanel{
         signUpButton.setOpaque(false);
         signUpButton.setBorder(BorderFactory.createEmptyBorder());
         signUpPanel.add(signUpButton);
+        
+        //added action listener to signUpButton to direct to registration
+        signUpButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                cardLayout.show(cardPanel, "registerPnl");    
+            }
+        });
 
         panel.add(signUpPanel);
         panel.setBackground(Japps.getJPanelColor());
