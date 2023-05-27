@@ -92,6 +92,10 @@ public class AdminRegistration extends JPanel {
         this.add(adminRegPnl, new GridBagConstraints());
     }
 
+    AdminRegistration() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     private void insertIntoTblUser(String lastName, String adminId) {
         try {
             String url = "jdbc:mysql://localhost:3306/dbHelix";

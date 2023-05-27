@@ -12,6 +12,8 @@ package com.mycompany.japps;
 
 
 
+import static com.mycompany.japps.Japps.cardLayout;
+import static com.mycompany.japps.Japps.cardPanel;
 import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.*;
@@ -42,6 +44,10 @@ public class Registration extends JPanel{
 
             StudentRegistration studentRegPnl = new StudentRegistration(cardPanel, cardLayout);
             cardPanel.add(studentRegPnl, "studentReg"); 
+            
+            
+            LoginPage loginPnl = new LoginPage(cardPanel, cardLayout);  
+            cardPanel.add(loginPnl, "login");   
 
             this.add(cardPanel);
             cardLayout.show(cardPanel, "splash");

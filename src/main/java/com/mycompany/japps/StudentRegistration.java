@@ -80,7 +80,7 @@ public class StudentRegistration extends JPanel{
                     insertIntoTblUser(lastName, studentId);
 
                     // Perform any additional actions or navigate to the next card in the CardLayout
-                    cardLayout.show(cardPanel, "adminReg"); 
+                    cardLayout.show(cardPanel, "login");
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                     // Handle SQL error
