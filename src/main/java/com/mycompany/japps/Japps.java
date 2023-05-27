@@ -7,6 +7,7 @@ import java.awt.*;
  * 
  * 
  */
+
 public class Japps extends JFrame {
     static JPanel cardPanel;
     static CardLayout cardLayout;
@@ -52,6 +53,7 @@ public class Japps extends JFrame {
     * ---------------------------------------------------------------------------------------------------------------------------
     *
     */
+    
     private void CardPanel() {
         cardPanel = new JPanel();
         cardLayout = new CardLayout();
@@ -76,6 +78,7 @@ public class Japps extends JFrame {
         cardPanel.add(new Profile(cardPanel, cardLayout), "profilePnl");
         cardPanel.add(new Calendar(cardPanel, cardLayout), "calendarPnl");
         }
+
     
     public static String getGUIName() {
         return "Helix";
@@ -83,6 +86,7 @@ public class Japps extends JFrame {
     
     public static int getGUIWidth() {
         return 1000;
+
         }
     
     public static int getGUIHeight() {
@@ -95,5 +99,6 @@ public class Japps extends JFrame {
     
     public static Color getJPanelColor() {
         return new Color(0xa83332);
+
         }
 }

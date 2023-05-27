@@ -1,13 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
+
 package com.mycompany.japps;
 
-/**
- *
- * @author Anfheirne
- */
 import static com.mycompany.japps.Japps.cardLayout;
 import static com.mycompany.japps.Japps.cardPanel;
 import javax.swing.*;
@@ -16,21 +9,19 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 
-public class AccountGUI extends JPanel {
 
+public class AccountGUI extends JPanel {
     private JTextField nameTextField;
     private JTextField studentNumberTextField;
     private JTable accountTable;
 
     public AccountGUI(JPanel cardPanel, CardLayout cardLayout) {
 
-
         setSize(800, 600);
   
-
         // bg color
         this.setBackground(Color.decode("#a83332"));
-
+    
         // create all the components
         nameTextField = new JTextField("Anfheirne T. Cañizares", 20);
         nameTextField.setEditable(false);
@@ -105,5 +96,4 @@ public class AccountGUI extends JPanel {
         this.setVisible(true);
     }
 
-    
 }
