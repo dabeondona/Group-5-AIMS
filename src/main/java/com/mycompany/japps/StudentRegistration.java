@@ -7,16 +7,14 @@ package com.mycompany.japps;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import javax.swing.*;
 
 public class StudentRegistration extends JPanel{
     JComboBox cbbDepartment;
     JComboBox cbbProgram;
     JComboBox cbbYearLevel;
+    Connection connection;
     
     public StudentRegistration(JPanel cardPanel, CardLayout cardLayout){
         JPanel studentRegPnl = studentRegPnl();
@@ -37,6 +35,7 @@ public class StudentRegistration extends JPanel{
         
         btnSubmit.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+                String register_id = String.format("%d", retrieveRegisterIds());
                 Connection connection = null;
                 try {
                     String url = "jdbc:mysql://localhost:3306/dbHelix";
@@ -51,13 +50,14 @@ public class StudentRegistration extends JPanel{
                 }
 
                 // Prepare SQL statement
-                String sql = "INSERT INTO `tblsttudent` (department, program, yearLevel) VALUES(?, ?, ?)";
+                String sql = "INSERT INTO `tblsttudent` (department, program, yearLevel, register_id) VALUES(?, ?, ?, ?)";
 
                 try (PreparedStatement statement = connection.prepareStatement(sql)) {
                     // Bind input values to the prepared statement
                     statement.setString(1, cbbDepartment.getSelectedItem().toString());
                     statement.setString(2, cbbProgram.getSelectedItem().toString());
                     statement.setString(3, cbbYearLevel.getSelectedItem().toString());
+                    statement.setString(4, register_id);
 
                     // Execute the SQL statement
                     statement.executeUpdate();
@@ -169,5 +169,38 @@ public class StudentRegistration extends JPanel{
             "Fourth Year"
         };
         return yearLevel;
+    }
+    
+    public int retrieveRegisterIds() {
+        int reg_id=0;
+        
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbhelix", "root", "");
+            // Create the SQL query
+            String sql = "SELECT register_id FROM tblregister";
+
+            // Create a statement object
+            Statement statement = connection.createStatement();
+
+            // Execute the query
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            // Process the result set
+            while (resultSet.next()) {
+                reg_id = resultSet.getInt("register_id");
+
+                // Do something with the registerId value
+
+                
+            }
+
+            // Close the statement and result set
+            statement.close();
+            resultSet.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Handle SQL error
+        }
+        return reg_id;
     }
 }

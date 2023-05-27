@@ -120,6 +120,8 @@ public class RegistrationType extends JPanel {
                         cardLayout.show(cardPanel, "studentReg");
                     } else if (selectedOption.equals("Admin")) {
                         cardLayout.show(cardPanel, "adminReg");
+                    } else if(selectedOption.equals("")){
+                        JOptionPane.showMessageDialog(panel, "Select type!");
                     }
                 }
                 

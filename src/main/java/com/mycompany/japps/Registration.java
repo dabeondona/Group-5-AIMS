@@ -4,9 +4,6 @@
  */
 package com.mycompany.japps;
 
-import java.awt.*;
-import javax.swing.*;
-import java.awt.event.*;
 
 /**
  *
@@ -30,6 +27,7 @@ public class Registration extends JPanel{
             cardPanel = new JPanel();
             cardLayout = new CardLayout();
             cardPanel.setLayout(cardLayout);
+            this.setBackground(Japps.getJFrameColor());
 
             /*SplashPage splashPnl = new SplashPage(cardPanel, cardLayout);    
             cardPanel.add(splashPnl, "splash");

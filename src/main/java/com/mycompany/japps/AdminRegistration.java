@@ -7,10 +7,7 @@ package com.mycompany.japps;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import javax.swing.*;
 
 /**
@@ -21,6 +18,7 @@ public class AdminRegistration extends JPanel{
     public JTextField tfJobTitle;
     public JTextField tfPosition;
     public JTextField tfInstitutionalEmail;
+    private Connection connection;
     
     public AdminRegistration(JPanel cardPanel, CardLayout cardLayout){
         JPanel adminRegPnl = adminRegPnl();
@@ -40,6 +38,8 @@ public class AdminRegistration extends JPanel{
         btnSubmit.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         
         btnSubmit.addActionListener(new ActionListener(){
+            String register_id = String.format("%d", retrieveRegisterIds());
+           
             public void actionPerformed(ActionEvent e){
                 Connection connection = null;
                 try {
@@ -55,13 +55,14 @@ public class AdminRegistration extends JPanel{
                 }
 
                 // Prepare SQL statement
-                String sql = "INSERT INTO `tbladmin` (jobTitle, position, institutionalEmail) VALUES(?, ?, ?)";
+                String sql = "INSERT INTO `tbladmin` (jobTitle, position, institutionalEmail, register_id) VALUES(?, ?, ?, ?)";
 
                 try (PreparedStatement statement = connection.prepareStatement(sql)) {
                     // Bind input values to the prepared statement
                     statement.setString(1, tfJobTitle.getText());
                     statement.setString(2, tfPosition.getText());
                     statement.setString(3, tfInstitutionalEmail.getText());
+                    statement.setString(4, register_id);
 
                     // Execute the SQL statement
                     statement.executeUpdate();
@@ -146,4 +147,38 @@ public class AdminRegistration extends JPanel{
             
         return panel;
     }
+    
+    public int retrieveRegisterIds() {
+        int reg_id=0;
+        
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbhelix", "root", "");
+            // Create the SQL query
+            String sql = "SELECT register_id FROM tblregister";
+
+            // Create a statement object
+            Statement statement = connection.createStatement();
+
+            // Execute the query
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            // Process the result set
+            while (resultSet.next()) {
+                reg_id = resultSet.getInt("register_id");
+
+                // Do something with the registerId value
+
+                
+            }
+
+            // Close the statement and result set
+            statement.close();
+            resultSet.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Handle SQL error
+        }
+        return reg_id+1;
+    }
+    
 }
