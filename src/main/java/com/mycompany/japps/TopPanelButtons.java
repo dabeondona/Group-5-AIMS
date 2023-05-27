@@ -18,14 +18,13 @@ public class TopPanelButtons extends JPanel {
         JButton profileIconButton = new JButton(new ImageIcon("C://Users//ondon//Pictures//20210619_214454.jpg"));
         profileIconButton.setPreferredSize(new Dimension(50,50));
         
-        
         // CENTER
         JPanel middlePnl = createMiddlePnl();
         middlePnl.setBackground(Japps.getJFrameColor());
+        
         // WEST
         JLabel placeholder = new JLabel("Logo Here");
         placeholder.setForeground(new Color(0xfcca00));
-        
         
         
         this.add(profileIconButton, BorderLayout.EAST);

@@ -34,6 +34,7 @@ public class Japps extends JFrame{
         cardLayout.show(cardPanel, "splash");
         this.setSize(getGUIWidth(), getGUIHeight());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
         this.setVisible(true);
         
     }
@@ -62,7 +63,6 @@ public class Japps extends JFrame{
             public void run() {
                 new Japps();
             }
-        });
-     //new NewsLetter();
+        }); 
     }
 }

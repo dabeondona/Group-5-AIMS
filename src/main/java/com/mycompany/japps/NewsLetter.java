@@ -7,41 +7,70 @@ import javax.swing.border.*;
  *
  * 
  */
-public class NewsLetter extends JPanel{
+public class NewsLetter extends JFrame{
     TopPanelButtons topPnlButtons;
     
     public NewsLetter() {
         this.setName(Japps.getGUIName());
         this.setLayout(new BorderLayout());
         
-        JPanel middlePnl = createMiddlePnl();
-        
-        TopPanelButtons topPnlButtons = new TopPanelButtons();
-        this.add(topPnlButtons, BorderLayout.NORTH);
-
-        this.add(middlePnl, BorderLayout.CENTER);
+        this.add(new TopPanelButtons(), BorderLayout.NORTH);
+        this.add( createMiddlePnl(), BorderLayout.CENTER);
         this.setSize(Japps.getGUIWidth(),Japps.getGUIHeight());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+    }
+    
+    public JPanel createTitlePnl() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        
+        JLabel titleLabel = new JLabel("The Technologian Newsletter");
+        Font font = titleLabel.getFont();
+        font = new Font(font.getName(), font.getStyle(), 35);
+        titleLabel.setFont(font);
+        panel.add(titleLabel);
+        
+        JPanel dateLabel = createLabelContent("May", "Friday", 13);
+        dateLabel.setBorder(new EmptyBorder(new Insets(0, 200, 0, 0)));
+        dateLabel.setForeground(new Color(0xfcca00));
+        dateLabel.setBackground(new Color(0xfcca00));
+        
+        panel.setBackground(new Color(0xfcca00));
+        panel.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK));
+        panel.add(dateLabel);
+        
+        return panel;     
     }
     
     public JPanel createMiddlePnl() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JPanel titlePnl = createTitlePnl();
+        panel.add(titlePnl);
         
-        JLabel title = new JLabel("The Technologian Newsletter");
-        Font font = title.getFont();
-        font = new Font(font.getName(), font.getStyle(), 30);
-        title.setFont(font);
-        title.setBorder(new EmptyBorder(new Insets(40, 200, 0, 0)));
-        panel.add(title);
+        panel.add(Box.createVerticalGlue()); 
+        JLabel titleLabel = new JLabel("Default");
+        Font font = titleLabel.getFont();
+        font = new Font(font.getName(), font.getStyle(), 25);
+        titleLabel.setFont(font);
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titleLabel.setBorder(new EmptyBorder(new Insets(25, 0, 0, 0)));
+        panel.add(titleLabel);
+        panel.add(Box.createVerticalGlue()); 
+
+        String loremIpsumText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum condimentum, odio nec interdum ullamcorper, enim odio finibus ex, vitae dignissim ligula sem sed sem. Morbi pharetra hendrerit rhoncus. Donec sodales orci eget mi convallis interdum. Duis volutpat nibh in est tristique, ac facilisis tortor imperdiet. Curabitur ac scelerisque mauris, vel ultricies massa. Integer accumsan nunc eget purus interdum, vitae pellentesque felis suscipit. Sed id lectus eget nulla porttitor commodo sed in urna. Nullam scelerisque facilisis augue, vitae pellentesque risus rutrum sed. Cras ac dui ac dui posuere pretium nec a metus. Nullam consectetur lacinia est sed gravida. Aliquam rutrum, mi a vestibulum bibendum, dui tortor rhoncus nulla, id venenatis odio felis non lorem. Vestibulum vitae lacinia lectus. Proin nec volutpat orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.";
+
+        JTextArea loremIpsumArea = new JTextArea(loremIpsumText);
+        loremIpsumArea.setEditable(false);
+        loremIpsumArea.setOpaque(false);
+        loremIpsumArea.setLineWrap(true);
+        loremIpsumArea.setWrapStyleWord(true);
+        loremIpsumArea.setBorder(new EmptyBorder(new Insets(25, 70, 0, 70)));
+        panel.add(loremIpsumArea);
         
-        panel.add(createLabelContent("May", "Saturday", 13));
-        panel.add(createButtonsContent("Placeholder1"));
-        panel.add(createButtonsContent("Placeholder2"));
-        panel.add(createButtonsContent("Placeholder3"));
         
-        panel.add(createLabelContent("May", "Sunday", 14));
-        panel.add(createButtonsContent("Placeholder4")); 
+        
         return panel;
     }
     
@@ -53,7 +82,7 @@ public class NewsLetter extends JPanel{
         Font font = label.getFont();
         font = new Font(font.getName(), font.getStyle(), 25);
         label.setFont(font);
-        label.setBorder(new EmptyBorder(new Insets(25, 200, 0, 0)));
+        label.setBorder(new EmptyBorder(new Insets(0, 200, 0, 0)));
         
         JLabel label2 = new JLabel(day);
         Font font2 = label2.getFont();
@@ -66,15 +95,10 @@ public class NewsLetter extends JPanel{
         return panel;
     }
     
-    public JPanel createButtonsContent(String description) {
+    public JPanel createContent() {
         JPanel panel = new JPanel();
-        JButton btnTest = new JButton(description);
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS)); 
-        panel.add(Box.createHorizontalGlue());
-        btnTest.setPreferredSize(new Dimension(300, 100)); 
-        panel.add(btnTest);
-        panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        panel.add(Box.createHorizontalGlue());
+        
+        // Admin Implementation
         return panel;
     }
     
