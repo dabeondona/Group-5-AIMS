@@ -7,7 +7,7 @@ import javax.swing.border.*;
  *
  * 
  */
-public class NewsLetter extends JFrame{
+public class NewsLetter extends JPanel{
     TopPanelButtons topPnlButtons;
     
     public NewsLetter() {
@@ -17,7 +17,6 @@ public class NewsLetter extends JFrame{
         this.add(new TopPanelButtons(), BorderLayout.NORTH);
         this.add( createMiddlePnl(), BorderLayout.CENTER);
         this.setSize(Japps.getGUIWidth(),Japps.getGUIHeight());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
     

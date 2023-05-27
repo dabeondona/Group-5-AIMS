@@ -18,7 +18,7 @@ public class LoginPage extends JPanel{
      JPanel northPnl = createNorthPnl();
      loginPagePnl.add(northPnl, BorderLayout.NORTH);
      
-     JPanel centerPnl = createCenterPnl();   
+     JPanel centerPnl = createCenterPnl(cardPanel, cardLayout);   
      loginPagePnl.add(centerPnl, BorderLayout.CENTER);
      
      JPanel southPnl = createSouthPnl(cardPanel, cardLayout);
@@ -57,7 +57,7 @@ public class LoginPage extends JPanel{
         return panel;
     }
     
-    public JPanel createCenterPnl() {
+    public JPanel createCenterPnl(JPanel cardPanel, CardLayout cardLayout) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(8,1));
         panel.setBackground(Japps.getJPanelColor());
@@ -80,17 +80,16 @@ public class LoginPage extends JPanel{
         loginButton.setBackground(new Color(0xfcca00));
         loginButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         
+       
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameTextField.getText();
                 String password = new String(usernamePWField.getPassword());
-
+ 
                 if (login(username, password)) {
-                    
-                    // User is authenticated, perform desired actions
-                    // For example, show a success message or navigate to another panel
+                   cardLayout.show(cardPanel, "newsLetterPnl");  
                 } else {
-                    // Invalid username or password, show an error message
+                    JOptionPane.showMessageDialog(LoginPage.this, "Incorrect Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
