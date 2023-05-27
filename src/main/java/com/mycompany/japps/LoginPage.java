@@ -1,7 +1,9 @@
 package com.mycompany.japps;
+import static com.mycompany.japps.Japps.cardPanel;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
+import java.sql.*;
 /**
  *
  * Codes to be used:
@@ -9,6 +11,7 @@ import java.awt.*;
  * - https://stackoverflow.com/questions/13368103/jpanel-drop-shadow
  */
 public class LoginPage extends JPanel{
+    
     
     public LoginPage(JPanel cardPanel, CardLayout cardLayout) {
      JPanel loginPagePnl = createLoginPagePnl();   
@@ -76,6 +79,22 @@ public class LoginPage extends JPanel{
         loginButton.setFocusPainted(false);
         loginButton.setBackground(new Color(0xfcca00));
         loginButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        
+        loginButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String username = usernameTextField.getText();
+                String password = new String(usernamePWField.getPassword());
+
+                if (login(username, password)) {
+                    
+                    // User is authenticated, perform desired actions
+                    // For example, show a success message or navigate to another panel
+                } else {
+                    // Invalid username or password, show an error message
+                }
+            }
+        });
+        
         panel.add(loginButton);  
         
         return panel;
@@ -119,6 +138,36 @@ public class LoginPage extends JPanel{
         
         return panel;
     }
+    
+    public boolean login(String username, String password) {
+        String dbUrl = "jdbc:mysql://localhost:3306/dbhelix"; // Replace dbname with your actual database name
+        String dbUsername = "root";
+        String dbPassword = "";
+
+        try (Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword)) {
+            String query = "SELECT * FROM tbluser WHERE username = ?";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, username);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String storedPassword = resultSet.getString("password");
+                if (password.equals(storedPassword)) {
+                    // User is authenticated
+                    return true;
+                }
+            }
+
+            // Invalid username or password
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle any potential database errors
+            return false;
+        }
+    }
+
     
     
 }

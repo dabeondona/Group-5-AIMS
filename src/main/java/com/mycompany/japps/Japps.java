@@ -27,6 +27,9 @@ public class Japps extends JFrame{
         Registration registerPnl = new Registration();
         cardPanel.add(registerPnl, "registerPnl");
         
+        NewsLetter newsLetterPnl = new NewsLetter();
+        cardPanel.add(newsLetterPnl, "newsLetterPnl");
+        
         this.add(cardPanel);
         cardLayout.show(cardPanel, "splash");
         this.setSize(getGUIWidth(), getGUIHeight());

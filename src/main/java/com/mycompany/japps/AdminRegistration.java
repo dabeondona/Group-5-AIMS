@@ -65,7 +65,7 @@ public class AdminRegistration extends JPanel {
                         insertIntoTblUser(lastName, adminId);
 
                         // Perform any additional actions or navigate to the next card in the CardLayout
-                        cardLayout.show(cardPanel, "adminReg");
+                        cardLayout.show(cardPanel, "login");
                     }
                 } catch (SQLException ex) {
                     ex.printStackTrace();
