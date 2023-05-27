@@ -1,34 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-package accountgui;
 
-/**
- *
- * @author Anfheirne
- */
+package com.mycompany.japps;
+
+import static com.mycompany.japps.Japps.cardLayout;
+import static com.mycompany.japps.Japps.cardPanel;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 
-public class AccountGUI extends JFrame {
 
+public class AccountGUI extends JPanel {
     private JTextField nameTextField;
     private JTextField studentNumberTextField;
     private JTable accountTable;
 
-    public AccountGUI() {
-        setTitle("Account Information");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public AccountGUI(JPanel cardPanel, CardLayout cardLayout) {
+
         setSize(800, 600);
-        setLocationRelativeTo(null);
-
+  
         // bg color
-        getContentPane().setBackground(Color.decode("#a83332"));
-
+        this.setBackground(Color.decode("#a83332"));
+    
         // create all the components
         nameTextField = new JTextField("Anfheirne T. Cañizares", 20);
         nameTextField.setEditable(false);
@@ -97,19 +90,10 @@ public class AccountGUI extends JFrame {
         panel.setBackground(Color.decode("#8c383e"));
 
         // add panel and content pane
-        Container container = getContentPane();
-        container.setLayout(new BorderLayout());
-        container.add(panel, BorderLayout.NORTH);
-        container.add(new JScrollPane(accountTable), BorderLayout.CENTER);
+        add(new TopPanelButtons(cardPanel, cardLayout), BorderLayout.NORTH);
+        add(panel, BorderLayout.CENTER);
+        add(new JScrollPane(accountTable), BorderLayout.SOUTH);
+        this.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                AccountGUI accountGUI = new AccountGUI();
-                accountGUI.setVisible(true);
-            }
-        });
-    }
 }

@@ -13,9 +13,14 @@ public class TopPanelButtons extends JPanel {
         
         
     public TopPanelButtons(JPanel cardPanel, CardLayout cardLayout) {
+      
         setLayout(new BorderLayout());
         // EAST
-        JButton profileIconButton = new JButton(new ImageIcon("C://Users//ondon//Pictures//20210619_214454.jpg"));
+        JButton profileIconButton = new JButton(new ImageIcon("C://Users//ondon//Pictures//default_icon.png"));
+        profileIconButton.setFocusPainted(false);
+        profileIconButton.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        profileIconButton.setBorder(BorderFactory.createEmptyBorder());
+        profileIconButton.setBackground(Japps.getJFrameColor());
         profileIconButton.setPreferredSize(new Dimension(50,50));
         profileIconButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -41,47 +46,53 @@ public class TopPanelButtons extends JPanel {
     public JPanel createMiddlePnl(JPanel cardPanel, CardLayout cardLayout) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 15));
 
-        JButton announcementsPnl = new JButton("Announcements");
-        announcementsPnl.addActionListener(new ActionListener(){
+        JButton announcementsButton = new JButton("Announcements");
+        announcementsButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 cardLayout.show(cardPanel, "announcementPnl");   
             }
         });
-        announcementsPnl.setBackground(new Color(0xfcca00));
 
-        JButton newsLetter = new JButton("Newsletter");
-        newsLetter.addActionListener(new ActionListener(){
+        announcementsButton.setBackground(new Color(0xfcca00));
+
+        JButton newsLetterButton = new JButton("Newsletter");
+        newsLetterButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 cardLayout.show(cardPanel, "newsLetterPnl");    
             }
         });
+
+        newsLetterButton.setBackground(new Color(0xfcca00));
         
-        newsLetter.setBackground(new Color(0xfcca00));
+        JButton accountsButton = new JButton("Accounts");
+        accountsButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                cardLayout.show(cardPanel, "accountsPnl");    
+            }
+        });
+        accountsButton.setBackground(new Color(0xfcca00));
 
         JButton calendarButton = new JButton("Calendar");
-        calendarButton.setBackground(new Color(0xfcca00));
         calendarButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 cardLayout.show(cardPanel, "calendarPnl");    
             }
         });
-
-        JButton placeHolderButton4 = new JButton("Placeholder_4");
-        placeHolderButton4.setBackground(new Color(0xfcca00));
+        calendarButton.setBackground(new Color(0xfcca00));
 
         JButton supportButton = new JButton("Support");
         supportButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 cardLayout.show(cardPanel, "supportPnl");    
             }
-        });
-        
+
+        }); 
         supportButton.setBackground(new Color(0xfcca00));
 
-        panel.add(announcementsPnl);
-        panel.add(newsLetter);
+        panel.add(announcementsButton);
+        panel.add(newsLetterButton);
+        panel.add(accountsButton);
         panel.add(calendarButton);
-        panel.add(placeHolderButton4);
         panel.add(supportButton);
         return panel;
     }
