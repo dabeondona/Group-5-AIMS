@@ -65,10 +65,13 @@ public class SupportPageView extends JPanel{
         String dbPassword = "";
 
         try (Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword)) {
+            int userID = Session.getSessionToken(); 
+            
             String query = "SELECT support_ID, support_Month, support_Day, support_Title, support_IsSolved FROM tblsupport";
 
-            Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, userID);
+            ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 Object[] rowData = new Object[5];

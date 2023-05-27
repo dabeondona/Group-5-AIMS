@@ -90,7 +90,7 @@ public class SupportPageSend extends JPanel{
     boolean isSolved = false;
 
     try(Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword)) {
-        String query = "INSERT INTO tblsupport (support_Month, support_Day, support_Time, support_Title, support_Description, support_IsSolved) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO tblsupport (support_Month, support_Day, support_Time, support_Title, support_Description, support_IsSolved, user_ID) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1, currentMonth);
         statement.setInt(2, currentDay);
@@ -98,6 +98,7 @@ public class SupportPageSend extends JPanel{
         statement.setString(4, title);
         statement.setString(5, description);
         statement.setBoolean(6, isSolved);
+        statement.setInt(7, Session.getSessionToken());
 
         int rowsInserted = statement.executeUpdate();
 
