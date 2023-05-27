@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package settingsscreen;
+package com.mycompany.japps;
 
 /**
  *
@@ -128,12 +128,7 @@ public class SettingsScreen extends JFrame {
 
         // add main panel to the frames content pane
         setContentPane(mainPanel);
+        this.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            SettingsScreen settingsScreen = new SettingsScreen();
-            settingsScreen.setVisible(true);
-        });
-    }
 }
