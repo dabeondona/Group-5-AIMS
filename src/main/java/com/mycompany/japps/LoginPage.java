@@ -156,7 +156,8 @@ public class LoginPage extends JPanel{
             if (resultSet.next()) {
                 String storedPassword = resultSet.getString("password");
                 if (password.equals(storedPassword)) {
-                    // User is authenticated
+                    resultSet.getInt("id");
+                    Session.setSessionToken(resultSet.getInt("id"));
                     return true;
                 }
             }
