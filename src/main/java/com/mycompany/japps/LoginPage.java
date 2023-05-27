@@ -88,6 +88,7 @@ public class LoginPage extends JPanel{
  
                 if (login(username, password)) {
                    cardLayout.show(cardPanel, "newsLetterPnl");  
+                   
                 } else {
                     JOptionPane.showMessageDialog(LoginPage.this, "Incorrect Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -98,6 +99,8 @@ public class LoginPage extends JPanel{
         
         return panel;
     }
+
+  
     
     public JPanel createSouthPnl(JPanel cardPanel, CardLayout cardLayout) {
         JPanel panel = new JPanel();

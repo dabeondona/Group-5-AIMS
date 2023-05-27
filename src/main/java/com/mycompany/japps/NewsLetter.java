@@ -10,12 +10,13 @@ import javax.swing.border.*;
 public class NewsLetter extends JPanel{
     TopPanelButtons topPnlButtons;
     
-    public NewsLetter() {
+    public NewsLetter(JPanel cardPanel, CardLayout cardLayout) {
         this.setName(Japps.getGUIName());
         this.setLayout(new BorderLayout());
         
-        this.add(new TopPanelButtons(), BorderLayout.NORTH);
+        this.add(new TopPanelButtons(cardPanel, cardLayout), BorderLayout.NORTH);
         this.add( createMiddlePnl(), BorderLayout.CENTER);
+       
         this.setSize(Japps.getGUIWidth(),Japps.getGUIHeight());
         this.setVisible(true);
     }

@@ -18,6 +18,8 @@ public class Japps extends JFrame{
         cardLayout = new CardLayout();
         cardPanel.setLayout(cardLayout);
         
+        TopPanelButtons topbuttonsPnl = new TopPanelButtons(cardPanel, cardLayout);
+        
         SplashPage splashPnl = new SplashPage(cardPanel, cardLayout);    
         cardPanel.add(splashPnl, "splash");
         
@@ -27,8 +29,18 @@ public class Japps extends JFrame{
         Registration registerPnl = new Registration();
         cardPanel.add(registerPnl, "registerPnl");
         
-        NewsLetter newsLetterPnl = new NewsLetter();
+        NewsLetter newsLetterPnl = new NewsLetter(cardPanel, cardLayout);
         cardPanel.add(newsLetterPnl, "newsLetterPnl");
+        
+        
+        SupportPage supportPnl = new SupportPage(cardPanel, cardLayout);
+        cardPanel.add(supportPnl, "supportPnl"); 
+        
+        SupportPageSend supportSendPnl = new SupportPageSend(cardPanel, cardLayout);
+        cardPanel.add(supportSendPnl, "supportSendPnl"); 
+        
+        SupportPageView supportViewPnl = new SupportPageView(cardPanel, cardLayout);
+        cardPanel.add(supportViewPnl, "supportViewPnl"); 
         
         this.add(cardPanel);
         cardLayout.show(cardPanel, "splash");
@@ -59,7 +71,7 @@ public class Japps extends JFrame{
         return new Color(0xa83332);
     }
     public static void main(String[] args) {
-       SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new Japps();
             }

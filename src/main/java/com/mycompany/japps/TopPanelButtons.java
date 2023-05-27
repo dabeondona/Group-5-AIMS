@@ -12,14 +12,14 @@ public class TopPanelButtons extends JPanel {
         JButton profileIconButton;
         
         
-    public TopPanelButtons() {
+    public TopPanelButtons(JPanel cardPanel, CardLayout cardLayout) {
         setLayout(new BorderLayout());
         // EAST
         JButton profileIconButton = new JButton(new ImageIcon("C://Users//ondon//Pictures//20210619_214454.jpg"));
         profileIconButton.setPreferredSize(new Dimension(50,50));
         
         // CENTER
-        JPanel middlePnl = createMiddlePnl();
+        JPanel middlePnl = createMiddlePnl(cardPanel, cardLayout);
         middlePnl.setBackground(Japps.getJFrameColor());
         
         // WEST
@@ -33,14 +33,20 @@ public class TopPanelButtons extends JPanel {
         this.setBackground(Japps.getJFrameColor());
     }
     
-    public JPanel createMiddlePnl() {
+    public JPanel createMiddlePnl(JPanel cardPanel, CardLayout cardLayout) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 15));
 
         JButton placeHolderButton1 = new JButton("Placeholder_1");
         placeHolderButton1.setBackground(new Color(0xfcca00));
 
-        JButton placeHolderButton2 = new JButton("Placeholder_2");
-        placeHolderButton2.setBackground(new Color(0xfcca00));
+        JButton newsLetter = new JButton("Newsletter");
+        newsLetter.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                cardLayout.show(cardPanel, "newsLetterPnl");    
+            }
+        });
+        
+        newsLetter.setBackground(new Color(0xfcca00));
 
         JButton placeHolderButton3 = new JButton("Placeholder_3");
         placeHolderButton3.setBackground(new Color(0xfcca00));
@@ -48,14 +54,20 @@ public class TopPanelButtons extends JPanel {
         JButton placeHolderButton4 = new JButton("Placeholder_4");
         placeHolderButton4.setBackground(new Color(0xfcca00));
 
-        JButton placeHolderButton5 = new JButton("Placeholder_5");
-        placeHolderButton5.setBackground(new Color(0xfcca00));
+        JButton supportButton = new JButton("Support");
+        supportButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                cardLayout.show(cardPanel, "supportPnl");    
+            }
+        });
+        
+        supportButton.setBackground(new Color(0xfcca00));
 
         panel.add(placeHolderButton1);
-        panel.add(placeHolderButton2);
+        panel.add(newsLetter);
         panel.add(placeHolderButton3);
         panel.add(placeHolderButton4);
-        panel.add(placeHolderButton5);
+        panel.add(supportButton);
         return panel;
     }
 }
