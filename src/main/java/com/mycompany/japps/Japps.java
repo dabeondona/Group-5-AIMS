@@ -53,6 +53,8 @@ public class Japps extends JFrame{
         Calendar calendarPnl = new Calendar(cardPanel, cardLayout);
         cardPanel.add(calendarPnl, "calendarPnl");
         
+
+        
         
         this.add(cardPanel);
         cardLayout.show(cardPanel, "splash");

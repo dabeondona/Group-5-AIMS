@@ -87,6 +87,7 @@ public class LoginPage extends JPanel{
                 String password = new String(usernamePWField.getPassword());
  
                 if (login(username, password)) {
+                   Username.setUsernameToken(username);
                    cardLayout.show(cardPanel, "announcementPnl");  
                    
                 } else {

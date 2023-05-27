@@ -9,6 +9,9 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.border.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -22,10 +25,14 @@ public class Profile extends JPanel{
     private JLabel photoLabel;
     private JButton uploadButton;
     private JLabel bloodType;
+    private JButton editButton;
+    private JButton settingsButton;
     
     public Profile(JPanel cardPanel, CardLayout cardLayout) {
         this.setName(Japps.getGUIName());
         this.setLayout(new BorderLayout());
+        
+        
         
         this.add(new TopPanelButtons(cardPanel, cardLayout), BorderLayout.NORTH);
         this.add( createMiddlePnl(), BorderLayout.CENTER);
@@ -68,7 +75,7 @@ public class Profile extends JPanel{
     
     public JPanel profileDetPnl(){
         JPanel panel = new JPanel();
-        
+        panel.setLayout(new BorderLayout());
         nameLabel = new JLabel("Name: John Doe");
         departmentLabel = new JLabel("Department: Computer Science");
         programLabel = new JLabel("Program: Bachelor of Science in Computer Science");
@@ -81,6 +88,8 @@ public class Profile extends JPanel{
         photoLabel.setPreferredSize(new Dimension(200, 200));
         photoLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new GridLayout(1, 2));
         // Create upload button
         uploadButton = new JButton("Upload Photo");
         uploadButton.addActionListener(new ActionListener() {
@@ -98,9 +107,133 @@ public class Profile extends JPanel{
                 }
             }
         });
+       
+        editButton = new JButton("Customize Profile");
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Save the username to the database
+                try {
+                    // Establish a connection to the database
+                    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbhelix", "root", "");
+
+                    // Check if the username already exists in the database
+                    String searchQuery = "SELECT * FROM tblprofile WHERE username = ?";
+                    PreparedStatement searchStmt = conn.prepareStatement(searchQuery);
+                    searchStmt.setString(1, Username.getUsernameToken());
+                    ResultSet resultSet = searchStmt.executeQuery();
+
+                    if (resultSet.next()) {
+                        // The username already exists in the database
+                        System.out.println("Username already exists");
+                    } else {
+                        // Prepare the SQL statement to insert the username
+                        String insertQuery = "INSERT INTO tblprofile (username) VALUES (?)";
+                        PreparedStatement insertStmt = conn.prepareStatement(insertQuery);
+
+                        // Set the username value
+                        insertStmt.setString(1, Username.getUsernameToken());
+
+                        // Execute the INSERT statement
+                        insertStmt.executeUpdate();
+
+                        System.out.println("Username added successfully");
+                    }
+
+                    // Close the result set, statements, and connection
+                    resultSet.close();
+                    searchStmt.close();
+                    conn.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                // Show the checkboxes
+                String[] options = {"Name", "Department", "Program", "Year Level", "Email", "Contact Number", "Blood Type", "Marital Status"};
+
+                // Create an array of JCheckBox components
+                JCheckBox[] checkBoxes = new JCheckBox[options.length];
+                for (int i = 0; i < options.length; i++) {
+                    checkBoxes[i] = new JCheckBox(options[i]);
+                }
+
+                // Create a panel to hold the checkboxes
+                JPanel checkBoxPanel = new JPanel(new GridLayout(0, 1));
+                for (JCheckBox checkBox : checkBoxes) {
+                    checkBoxPanel.add(checkBox);
+                }
+
+                // Retrieve the checkbox values from the database and set initial selection
+                Map<String, Boolean> optionMap = retrieveCheckboxValuesFromDatabase();
+                for (JCheckBox checkBox : checkBoxes) {
+                    boolean isSelected = optionMap.getOrDefault(checkBox.getText(), false);
+                    checkBox.setSelected(isSelected);
+                }
+
+                // Show the dialog with checkboxes
+                int result = JOptionPane.showConfirmDialog(null, checkBoxPanel, "Customize Profile", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    // Process the selected checkboxes
+                    StringBuilder selectedOptions = new StringBuilder();
+                    optionMap.clear(); // Clear the previous values
+
+                    for (JCheckBox checkBox : checkBoxes) {
+                        boolean isSelected = checkBox.isSelected();
+                        optionMap.put(checkBox.getText(), isSelected);
+                        if (isSelected) {
+                            selectedOptions.append(checkBox.getText()).append("\n");
+                        }
+                    }
+
+                    // Display the selected options
+                    JOptionPane.showMessageDialog(null, "Selected options:\n" + selectedOptions.toString());
+
+                    // Save username and selected options to the database
+                    try {
+                        // Establish a connection to the database
+                        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbhelix", "root", "");
+
+                        // Prepare the SQL statement
+                        String sql = "INSERT INTO tblprofile (Name, Department, Program, YearLevel, Email, ContactNumber, BloodType, MaritalStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                        PreparedStatement stmt = conn.prepareStatement(sql);
+
+                        // Set the values for each column
+                        stmt.setString(1, optionMap.getOrDefault("Name", true) ? "Selected" : "Not Selected");
+                        stmt.setString(2, optionMap.getOrDefault("Department", true) ? "Selected" : "Not Selected");
+                        stmt.setString(3, optionMap.getOrDefault("Program", true) ? "Selected" : "Not Selected");
+                        stmt.setString(4, optionMap.getOrDefault("Year Level", true) ? "Selected" : "Not Selected");
+                        stmt.setString(5, optionMap.getOrDefault("Email", true) ? "Selected" : "Not Selected");
+                        stmt.setString(6, optionMap.getOrDefault("Contact Number", true) ? "Selected" : "Not Selected");
+                        stmt.setString(7, optionMap.getOrDefault("Blood Type", true) ? "Selected" : "Not Selected");
+                        stmt.setString(8, optionMap.getOrDefault("Marital Status", true) ? "Selected" : "Not Selected");
+
+                        // Execute the INSERT statement
+                        stmt.executeUpdate();
+
+                        // Close the statement and connection
+                        stmt.close();
+                        conn.close();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+        
+        settingsButton = new JButton("Settings");
+        settingsButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                
+            }
+        });
+
+
+        
+        buttons.add(uploadButton);
+        buttons.add(editButton);
 
         // Add components to the frame
         panel.add(photoLabel, BorderLayout.WEST);
+        
 
         JPanel detailsPanel = new JPanel();
         detailsPanel.setLayout(new GridLayout(5, 1));
@@ -111,9 +244,51 @@ public class Profile extends JPanel{
         detailsPanel.add(bloodType);
 
         panel.add(detailsPanel, BorderLayout.CENTER);
-        panel.add(uploadButton, BorderLayout.SOUTH);
+        panel.add(buttons, BorderLayout.SOUTH);
         
         return panel;
     }
+    
+    private Map<String, Boolean> retrieveCheckboxValuesFromDatabase() {
+        Map<String, Boolean> optionMap = new HashMap<>();
+
+        try {
+            // Establish a connection to the database
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbhelix", "root", "");
+
+            // Prepare the SQL statement
+            String sql = "SELECT * FROM tblprofile WHERE username = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, Username.getUsernameToken()); // Replace getUsername() with the method to retrieve the username
+
+            // Execute the SELECT query
+            ResultSet resultSet = stmt.executeQuery();
+
+            // Process the result set
+            if (resultSet.next()) {
+                optionMap.put("Name", "Selected".equals(resultSet.getString("Name")));
+                optionMap.put("Department", "Selected".equals(resultSet.getString("Department")));
+                optionMap.put("Program", "Selected".equals(resultSet.getString("Program")));
+                optionMap.put("Year Level", "Selected".equals(resultSet.getString("YearLevel")));
+                optionMap.put("Email", "Selected".equals(resultSet.getString("Email")));
+                optionMap.put("Contact Number", "Selected".equals(resultSet.getString("ContactNumber")));
+                optionMap.put("Blood Type", "Selected".equals(resultSet.getString("BloodType")));
+                optionMap.put("Marital Status", "Selected".equals(resultSet.getString("MaritalStatus")));
+            }
+
+            // Close the result set, statement, and connection
+            resultSet.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return optionMap;
+    }
+
+
+
+
     
 }
