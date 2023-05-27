@@ -53,8 +53,13 @@ public class TopPanelButtons extends JPanel {
         
         newsLetter.setBackground(new Color(0xfcca00));
 
-        JButton placeHolderButton3 = new JButton("Placeholder_3");
-        placeHolderButton3.setBackground(new Color(0xfcca00));
+        JButton calendarButton = new JButton("Calendar");
+        calendarButton.setBackground(new Color(0xfcca00));
+        calendarButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                cardLayout.show(cardPanel, "calendarPnl");    
+            }
+        });
 
         JButton placeHolderButton4 = new JButton("Placeholder_4");
         placeHolderButton4.setBackground(new Color(0xfcca00));
@@ -70,7 +75,7 @@ public class TopPanelButtons extends JPanel {
 
         panel.add(placeHolderButton1);
         panel.add(newsLetter);
-        panel.add(placeHolderButton3);
+        panel.add(calendarButton);
         panel.add(placeHolderButton4);
         panel.add(supportButton);
         return panel;

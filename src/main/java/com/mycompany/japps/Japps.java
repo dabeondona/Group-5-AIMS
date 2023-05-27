@@ -45,6 +45,9 @@ public class Japps extends JFrame{
         Profile profilePnl = new Profile(cardPanel, cardLayout);
         cardPanel.add(profilePnl,"profilePnl");
         
+        Calendar calendarPnl = new Calendar(cardPanel, cardLayout);
+        cardPanel.add(calendarPnl, "calendarPnl");
+        
         
         this.add(cardPanel);
         cardLayout.show(cardPanel, "splash");
