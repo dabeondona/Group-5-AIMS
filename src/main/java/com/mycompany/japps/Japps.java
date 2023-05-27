@@ -42,6 +42,10 @@ public class Japps extends JFrame{
         SupportPageView supportViewPnl = new SupportPageView(cardPanel, cardLayout);
         cardPanel.add(supportViewPnl, "supportViewPnl"); 
         
+        Profile profilePnl = new Profile(cardPanel, cardLayout);
+        cardPanel.add(profilePnl,"profilePnl");
+        
+        
         this.add(cardPanel);
         cardLayout.show(cardPanel, "splash");
         this.setSize(getGUIWidth(), getGUIHeight());

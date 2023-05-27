@@ -17,6 +17,11 @@ public class TopPanelButtons extends JPanel {
         // EAST
         JButton profileIconButton = new JButton(new ImageIcon("C://Users//ondon//Pictures//20210619_214454.jpg"));
         profileIconButton.setPreferredSize(new Dimension(50,50));
+        profileIconButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                cardLayout.show(cardPanel, "profilePnl");    
+            }
+        });
         
         // CENTER
         JPanel middlePnl = createMiddlePnl(cardPanel, cardLayout);
