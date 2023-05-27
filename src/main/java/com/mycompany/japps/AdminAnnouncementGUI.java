@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-package adminannouncementgui;
 
-/**
- *
- * @author Anfheirne
- */
+package com.mycompany.japps;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -78,10 +70,5 @@ public class AdminAnnouncementGUI extends JFrame {
         return panel;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            AdminAnnouncementGUI announcementSystem = new AdminAnnouncementGUI();
-            announcementSystem.setVisible(true);
-        });
-    }
+   
 }

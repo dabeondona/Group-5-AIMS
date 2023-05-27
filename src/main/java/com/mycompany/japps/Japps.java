@@ -32,6 +32,8 @@ public class Japps extends JFrame{
         NewsLetter newsLetterPnl = new NewsLetter(cardPanel, cardLayout);
         cardPanel.add(newsLetterPnl, "newsLetterPnl");
         
+        AnnouncementGUI announcementPnl = new AnnouncementGUI(cardPanel, cardLayout);
+        cardPanel.add(announcementPnl, "announcementPnl");
         
         SupportPage supportPnl = new SupportPage(cardPanel, cardLayout);
         cardPanel.add(supportPnl, "supportPnl"); 
@@ -78,12 +80,11 @@ public class Japps extends JFrame{
         return new Color(0xa83332);
     }
     public static void main(String[] args) {
-       /* SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new Japps();
             }
-        });  */
+        });  
        
-       new AnnouncementGUI();
     }
 }

@@ -87,7 +87,7 @@ public class LoginPage extends JPanel{
                 String password = new String(usernamePWField.getPassword());
  
                 if (login(username, password)) {
-                   cardLayout.show(cardPanel, "newsLetterPnl");  
+                   cardLayout.show(cardPanel, "announcementPnl");  
                    
                 } else {
                     JOptionPane.showMessageDialog(LoginPage.this, "Incorrect Username or Password", "Error", JOptionPane.ERROR_MESSAGE);

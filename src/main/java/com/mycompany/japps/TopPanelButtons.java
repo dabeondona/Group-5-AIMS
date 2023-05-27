@@ -41,8 +41,13 @@ public class TopPanelButtons extends JPanel {
     public JPanel createMiddlePnl(JPanel cardPanel, CardLayout cardLayout) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 15));
 
-        JButton placeHolderButton1 = new JButton("Placeholder_1");
-        placeHolderButton1.setBackground(new Color(0xfcca00));
+        JButton announcementsPnl = new JButton("Announcements");
+        announcementsPnl.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                cardLayout.show(cardPanel, "announcementPnl");   
+            }
+        });
+        announcementsPnl.setBackground(new Color(0xfcca00));
 
         JButton newsLetter = new JButton("Newsletter");
         newsLetter.addActionListener(new ActionListener(){
@@ -73,7 +78,7 @@ public class TopPanelButtons extends JPanel {
         
         supportButton.setBackground(new Color(0xfcca00));
 
-        panel.add(placeHolderButton1);
+        panel.add(announcementsPnl);
         panel.add(newsLetter);
         panel.add(calendarButton);
         panel.add(placeHolderButton4);

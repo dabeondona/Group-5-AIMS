@@ -1,20 +1,18 @@
 
 package com.mycompany.japps;
 
+import static com.mycompany.japps.Japps.cardLayout;
+import static com.mycompany.japps.Japps.cardPanel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class AnnouncementGUI extends JFrame {
+public class AnnouncementGUI extends JPanel {
 
-    public AnnouncementGUI() {
-        setTitle("Announcement");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
-        setLocationRelativeTo(null);
+    public AnnouncementGUI(JPanel cardPanel, CardLayout cardLayout) {
 
         // bg color sa frame
-        getContentPane().setBackground(Color.decode("#8c383e"));
+        this.setBackground(Color.decode("#8c383e"));
 
         JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -357,11 +355,8 @@ public class AnnouncementGUI extends JFrame {
         tabbedPane.addTab("ONLINE PAYMENTS", announcementPanel3);
         tabbedPane.addTab("ENROLLMENT SCHEDULES", announcementPanel4);
 
-        // Add the tabbed pane to the content pane
-        Container container = getContentPane();
-        container.setLayout(new BorderLayout());
-        container.add(tabbedPane, BorderLayout.CENTER);
-        
+        add(new TopPanelButtons(cardPanel, cardLayout), BorderLayout.NORTH);
+        add(tabbedPane, BorderLayout.CENTER);
         this.setVisible(true);
     }
 
