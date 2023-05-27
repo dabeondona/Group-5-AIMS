@@ -344,77 +344,7 @@ public class RegistrationType extends JPanel {
         return panel;
     }
     
-    /*public JPanel btnNextPnl(){
-        JPanel panel = new JPanel();
-        panel.setBackground(Registration.getJPanelColor());
-        
-        JButton btnNext = new JButton("Next");
-        btnNext.setFocusPainted(false);
-        btnNext.setBackground(new Color(0xfcca00));
-        btnNext.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        
-        btnNext.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                Connection connection = null;
-                try {
-                    String url = "jdbc:mysql://localhost:3306/your_database_name";
-                    String username = "root";
-                    String password = "";
 
-                    connection = DriverManager.getConnection(url, username, password);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    // Handle connection error
-                    return;
-                }
-
-                // Prepare SQL statement
-                String sql = "INSERT INTO `tblregister` (`lastName`, `firstName`, `middleName`, `suffix`, `homeAddress`, `region`, `province`, `municipality`, `barangay`, `contactNumber`, `dateOfBirth`, `placeOfBirth`, `maritalStatus`, `email`, `religion`, `citizenship`,  `bloodType`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-                try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                    // Bind input values to the prepared statement
-                    statement.setString(1, tfLastName.getText());
-                    statement.setString(2, tfFirstName.getText());
-                    statement.setString(3, tfMiddleName.getText());
-                    statement.setString(4, tfSuffix.getText());
-                    statement.setString(5, tfHomeAddress.getText());
-                    statement.setString(6, cbbRegion.getSelectedItem().toString());
-                    statement.setString(7, cbbProvince.getSelectedItem().toString());
-                    statement.setString(8, cbbMunicipality.getSelectedItem().toString());
-                    statement.setString(9, cbbBarangay.getSelectedItem().toString());
-                    statement.setString(10, tfContactNumber.getText());
-                    statement.setString(11, tfDateOfBirth.getText());
-                    statement.setString(12, tfPlaceOfBirth.getText());
-                    statement.setString(13, cbbMaritalStatus.getSelectedItem().toString());
-                    statement.setString(14, tfEmail.getText());
-                    statement.setString(15, tfReligion.getText());
-                    statement.setString(16, tfCitizenship.getText());
-                    statement.setString(17, cbbBloodType.getSelectedItem().toString());
-
-                    // Execute the SQL statement
-                    statement.executeUpdate();
-
-                    // Close the statement and connection
-                    statement.close();
-                    connection.close();
-
-                    // Provide feedback to the user (e.g., success message)
-                    JOptionPane.showMessageDialog(panel, "Data inserted successfully!");
-
-                    // Perform any additional actions or navigate to the next card in the CardLayout
-                    cardLayout.show(cardPanel, "adminReg"); 
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    // Handle SQL error
-                }
-            }
-        });
-
-        panel.add(btnNext);
-        
-        return panel;
-    }*/
-    
     
     
     

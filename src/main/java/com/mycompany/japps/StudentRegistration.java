@@ -34,8 +34,15 @@ public class StudentRegistration extends JPanel{
         btnSubmit.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         
         btnSubmit.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
+            public void actionPerformed(ActionEvent e) {
                 String register_id = String.format("%d", retrieveRegisterIds());
+
+                // Retrieve the last name from the tblregister table
+                String lastName = retrieveLastName();
+                String studentId = retrieveStudentId();
+
+
+                
                 Connection connection = null;
                 try {
                     String url = "jdbc:mysql://localhost:3306/dbHelix";
@@ -69,14 +76,15 @@ public class StudentRegistration extends JPanel{
                     // Provide feedback to the user (e.g., success message)
                     JOptionPane.showMessageDialog(panel, "Data inserted successfully!");
 
+                    // Insert the last name and student ID into tbluser
+                    insertIntoTblUser(lastName, studentId);
+
                     // Perform any additional actions or navigate to the next card in the CardLayout
                     cardLayout.show(cardPanel, "adminReg"); 
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                     // Handle SQL error
                 }
-               
-                
             }
         });
         
@@ -87,6 +95,26 @@ public class StudentRegistration extends JPanel{
         this.setBackground(Japps.getJFrameColor());
         this.setLayout(new GridBagLayout()); 
         this.add(studentRegPnl, new GridBagConstraints());  
+    }
+    
+    private void insertIntoTblUser(String lastName, String studentId) {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbHelix", "root", "");
+
+            String sql = "INSERT INTO `tbluser` (password, username) VALUES (?, ?)";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, lastName);
+            statement.setString(2, studentId);
+
+            statement.executeUpdate();
+
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Handle SQL error
+        }
     }
     
     public JPanel createStudPnl(){
@@ -203,4 +231,76 @@ public class StudentRegistration extends JPanel{
         }
         return reg_id;
     }
+    
+    public String retrieveLastName() {
+        String lastName = "";
+
+        try {
+            String url = "jdbc:mysql://localhost:3306/dbHelix";
+            String username = "root";
+            String password = "";
+
+            Connection connection = DriverManager.getConnection(url, username, password);
+
+            String sql = "SELECT lastName FROM tblregister ORDER BY register_id DESC LIMIT 1";
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            if (resultSet.next()) {
+                lastName = resultSet.getString("lastName");
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Handle SQL error
+        }
+
+        System.out.println(lastName);
+
+        return lastName;
+        }
+    
+    
+    public String retrieveStudentId() {
+        String studentId = "";
+
+        try {
+            String url = "jdbc:mysql://localhost:3306/dbHelix";
+            String username = "root";
+            String password = "";
+
+            Connection connection = DriverManager.getConnection(url, username, password);
+
+            String sql = "SELECT studentID FROM tblsttudent ORDER BY studentID DESC LIMIT 1";
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            if (resultSet.next()) {
+                studentId = resultSet.getString("studentId");
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Handle SQL error
+        }
+
+        System.out.println(studentId);
+
+        int parNum = Integer.valueOf(studentId)+1;
+        String id = String.format("%d", parNum);
+
+        return id;
+    }
+
+
+    
+    
 }
