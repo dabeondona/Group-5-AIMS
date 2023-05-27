@@ -78,10 +78,12 @@ public class Japps extends JFrame{
         return new Color(0xa83332);
     }
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
+       /* SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new Japps();
             }
-        }); 
+        });  */
+       
+       new AnnouncementGUI();
     }
 }

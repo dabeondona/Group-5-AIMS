@@ -1,13 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-package announcementgui;
 
-/**
- *
- * @author Anfheirne
- */
+package com.mycompany.japps;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -368,6 +361,8 @@ public class AnnouncementGUI extends JFrame {
         Container container = getContentPane();
         container.setLayout(new BorderLayout());
         container.add(tabbedPane, BorderLayout.CENTER);
+        
+        this.setVisible(true);
     }
 
     private JPanel createAnnouncementPanel(String title, String date, String content) {
@@ -399,15 +394,5 @@ public class AnnouncementGUI extends JFrame {
         panel.add(scrollPane);
 
         return panel;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                AnnouncementGUI announcementGUI = new AnnouncementGUI();
-                announcementGUI.setVisible(true);
-            }
-        });
     }
 }
