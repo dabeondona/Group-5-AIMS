@@ -107,6 +107,12 @@ public class LoginPage extends JPanel{
         panel.setLayout(new GridLayout(2,1));
         
         JButton forgotButton = new JButton("<html><u>Forgot Password? Click me!</u></html>");
+        forgotButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                cardLayout.show(cardPanel, "forget");    
+            }
+        });
+        
         forgotButton.setBackground(new Color(0, 0, 0, 0));
         forgotButton.setForeground(Color.WHITE);
         forgotButton.setOpaque(false);

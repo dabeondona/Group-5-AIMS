@@ -26,6 +26,9 @@ public class Japps extends JFrame{
         LoginPage loginPnl = new LoginPage(cardPanel, cardLayout);  
         cardPanel.add(loginPnl, "login");   
         
+        ForgetPasswordGUI forgetPnl = new ForgetPasswordGUI(cardPanel, cardLayout);
+        cardPanel.add(forgetPnl, "forget");
+        
         Registration registerPnl = new Registration();
         cardPanel.add(registerPnl, "registerPnl");
         
@@ -84,7 +87,6 @@ public class Japps extends JFrame{
             public void run() {
                 new Japps();
             }
-        });  
-       
+        }); 
     }
 }

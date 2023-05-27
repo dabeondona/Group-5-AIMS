@@ -1,26 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-package forgetpasswordgui;
+package com.mycompany.japps;
 
-/**
- *
- * @author Anfheirne
- */
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class ForgetPasswordGUI extends JFrame {
+public class ForgetPasswordGUI extends JPanel {
 
     private JTextField emailTextField;
     private JTextField phoneTextField;
 
-    public ForgetPasswordGUI() {
-        setTitle("Forget Password");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public ForgetPasswordGUI(JPanel cardPanel, CardLayout cardLayout) {
+   
         setSize(400, 300);
-        setLocationRelativeTo(null);
 
         //3 components
         JLabel titleLabel = new JLabel("Reset Your Password");
@@ -32,6 +24,12 @@ public class ForgetPasswordGUI extends JFrame {
         phoneTextField = new JTextField(20);
         JButton searchButton = new JButton("Search");
         JButton cancelButton = new JButton("Cancel");
+        
+        cancelButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                cardLayout.show(cardPanel, "login");   
+            }
+        });
 
         // panel sa components
         JPanel panel = new JPanel();
@@ -82,21 +80,13 @@ public class ForgetPasswordGUI extends JFrame {
         boxPanel.add(panel, BorderLayout.CENTER);
 
         // frame bg color
-        getContentPane().setBackground(Color.decode("#8c383e"));
+        this.setBackground(Color.decode("#8c383e"));
 
         // Add the box panel to the frame
-        getContentPane().setLayout(new BorderLayout());
-        getContentPane().add(boxPanel, BorderLayout.CENTER);
+        this.setLayout(new BorderLayout());
+        this.add(boxPanel, BorderLayout.CENTER);
+        this.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                ForgetPasswordGUI forgetPasswordGUI = new ForgetPasswordGUI();
-                forgetPasswordGUI.setVisible(true);
-            }
-        });
-    }
 }
 
