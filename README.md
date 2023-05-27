@@ -1,7 +1,7 @@
 # Group-5-AIMS
 An Experimental Project in Reinvigorating CIT's AIMS
 
-GUI Name: Helix <b>(?)</b>
+GUI Name: Helix 
 
 
 <br><br>
