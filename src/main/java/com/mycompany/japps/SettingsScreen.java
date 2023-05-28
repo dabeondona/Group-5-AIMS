@@ -25,7 +25,7 @@ public class SettingsScreen extends JPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
         
-        JLabel titleLabel = new JLabel("Settigns");
+        JLabel titleLabel = new JLabel("Settings");
         Font font = titleLabel.getFont();
         font = new Font(font.getName(), font.getStyle(), 35);
         titleLabel.setFont(font);
