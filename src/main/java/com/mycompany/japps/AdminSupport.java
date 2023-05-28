@@ -1,27 +1,22 @@
 
 package com.mycompany.japps;
 import javax.swing.*;
-import java.awt.event.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import javax.swing.border.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-
-public class AdminNewsletter extends JPanel {
-
+public class AdminSupport extends JPanel {
     private DefaultTableModel tableModel;
     private JTable table;
 
-    public AdminNewsletter(JPanel cardPanel, CardLayout cardLayout) {
+    public AdminSupport(JPanel cardPanel, CardLayout cardLayout) {
         this.setLayout(new BorderLayout());
 
         this.add(new AdminTopPanelButton(cardPanel, cardLayout), BorderLayout.NORTH);
@@ -39,7 +34,10 @@ public class AdminNewsletter extends JPanel {
         tableModel.addColumn("ID");
         tableModel.addColumn("Month");
         tableModel.addColumn("Day");
+        tableModel.addColumn("Time");
         tableModel.addColumn("Title");
+        tableModel.addColumn("Description");
+        tableModel.addColumn("Status");
 
         table = new JTable(tableModel);
 
@@ -52,33 +50,64 @@ public class AdminNewsletter extends JPanel {
                 return this;
             }
         };
-        table.getColumnModel().getColumn(3).setCellRenderer(cellRenderer);
+        table.getColumnModel().getColumn(6).setCellRenderer(cellRenderer);
 
         String dbUrl = "jdbc:mysql://localhost:3306/dbhelix";
         String dbUsername = "root";
         String dbPassword = "";
 
         try (Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword)) {
-
-            String query = "SELECT news_ID, news_Month, news_Day, news_DayInt, news_Title FROM tblnewsletter";
-
+            String query = "SELECT support_ID, support_Month, support_Day, support_Time, support_Title, support_Description, support_IsSolved FROM tblsupport";
             PreparedStatement statement = conn.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                Object[] rowData = new Object[4];
-                rowData[0] = resultSet.getInt("news_ID");
-                rowData[1] = resultSet.getString("news_Month");
-                rowData[2] = resultSet.getInt("news_DayInt") + "    -    " + resultSet.getString("news_Day");
-                rowData[3] = resultSet.getString("news_Title");
+                Object[] rowData = new Object[7];
+                rowData[0] = resultSet.getInt("support_ID");
+                rowData[1] = resultSet.getString("support_Month");
+                rowData[2] = resultSet.getInt("support_Day");
+                rowData[3] = resultSet.getTime("support_Time");
+                rowData[4] = resultSet.getString("support_Title");
+                rowData[5] = resultSet.getString("support_Description");
+                int isSolved = resultSet.getInt("support_IsSolved");
+                rowData[6] = (isSolved == 0) ? "Pending" : "Resolved";
+
                 tableModel.addRow(rowData);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        JScrollPane scrollPane = new JScrollPane(table);
+ 
+        DefaultTableCellRenderer statusCellRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                setHorizontalAlignment(SwingConstants.CENTER);
+                setText(value.toString());
 
+                // Set font color based on the status value
+                if (value.toString().equals("Pending")) {
+                    setForeground(Color.ORANGE);
+                } else if (value.toString().equals("Resolved")) {
+                    setForeground(Color.GREEN);
+                }
+
+                return this;
+            }
+        };
+        table.getColumnModel().getColumn(6).setCellRenderer(statusCellRenderer);
+
+        // Set preferred column widths
+        table.getColumnModel().getColumn(0).setPreferredWidth(50);
+        table.getColumnModel().getColumn(1).setPreferredWidth(100);
+        table.getColumnModel().getColumn(2).setPreferredWidth(50);
+        table.getColumnModel().getColumn(3).setPreferredWidth(80);
+        table.getColumnModel().getColumn(4).setPreferredWidth(150);
+        table.getColumnModel().getColumn(5).setPreferredWidth(200);
+        table.getColumnModel().getColumn(6).setPreferredWidth(80);
+
+        JScrollPane scrollPane = new JScrollPane(table);
         panel.add(scrollPane);
 
         return panel;
@@ -86,22 +115,14 @@ public class AdminNewsletter extends JPanel {
 
     public JPanel createBottomPnl(JPanel cardPanel, CardLayout cardLayout) {
         JPanel panel = new JPanel();
-
-        JButton createButton = new JButton("Insert");
+        
         JButton updateButton = new JButton("Update");
         JButton deleteButton = new JButton("Delete");
-
-        createButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(cardPanel, "adminnewsletterinsertPnl");
-            }
-        });
         
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(cardPanel, "adminsnewsletterupdatePnl");
+                cardLayout.show(cardPanel, "adminsupportupdatePnl");
             }
         });
         
@@ -113,10 +134,6 @@ public class AdminNewsletter extends JPanel {
             }
         });
 
-        panel.add(createButton);
-        panel.add(updateButton);
-        panel.add(deleteButton);
-
         JButton refreshButton = new JButton("Refresh");
         refreshButton.addActionListener(new ActionListener() {
             @Override
@@ -124,38 +141,44 @@ public class AdminNewsletter extends JPanel {
                 refreshTable();
             }
         });
+        
+        
+        
+        panel.add(updateButton);
+        panel.add(deleteButton);
         panel.add(refreshButton);
 
         return panel;
     }
 
-    public void refreshTable() {
-        tableModel.setRowCount(0);
+    private void refreshTable() {
+        tableModel.setRowCount(0); 
 
         String dbUrl = "jdbc:mysql://localhost:3306/dbhelix";
         String dbUsername = "root";
         String dbPassword = "";
 
         try (Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword)) {
-            String query = "SELECT news_ID, news_Month, news_Day, news_DayInt, news_Title FROM tblnewsletter";
-
+            String query = "SELECT support_ID, support_Month, support_Day, support_Time, support_Title, support_Description, support_IsSolved FROM tblsupport";
             PreparedStatement statement = conn.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                Object[] rowData = new Object[4];
-                rowData[0] = resultSet.getInt("news_ID");
-                rowData[1] = resultSet.getString("news_Month");
-                rowData[2] = resultSet.getInt("news_DayInt") + "    -    " + resultSet.getString("news_Day");
-                rowData[3] = resultSet.getString("news_Title");
+                Object[] rowData = new Object[7];
+                rowData[0] = resultSet.getInt("support_ID");
+                rowData[1] = resultSet.getString("support_Month");
+                rowData[2] = resultSet.getInt("support_Day");
+                rowData[3] = resultSet.getTime("support_Time");
+                rowData[4] = resultSet.getString("support_Title");
+                rowData[5] = resultSet.getString("support_Description");
+                int isSolved = resultSet.getInt("support_IsSolved");
+                rowData[6] = (isSolved == 0) ? "Pending" : "Resolved";
+
                 tableModel.addRow(rowData);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        tableModel.fireTableDataChanged();
-        table.repaint();
     }
     
     public void deleteLatestEntry() {
@@ -164,7 +187,7 @@ public class AdminNewsletter extends JPanel {
     String dbPassword = "";
 
     try (Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword)) {
-        String deleteQuery = "DELETE FROM tblnewsletter WHERE news_ID = (SELECT MAX(news_ID) FROM tblnewsletter)";
+        String deleteQuery = "DELETE FROM tblsupport WHERE support_ID = (SELECT MAX(support_ID) FROM tblsupport)";
         PreparedStatement deleteStatement = conn.prepareStatement(deleteQuery);
         deleteStatement.executeUpdate();
     } catch (SQLException e) {
@@ -172,4 +195,3 @@ public class AdminNewsletter extends JPanel {
     }
     }
 }
-

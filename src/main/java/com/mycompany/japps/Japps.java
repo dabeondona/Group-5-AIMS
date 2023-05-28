@@ -80,6 +80,9 @@ public class Japps extends JFrame {
         cardPanel.add(new AdminNewsletter(cardPanel, cardLayout), "adminnewsletterPnl");
         cardPanel.add(new AdminNewsletterInsert(cardPanel, cardLayout), "adminnewsletterinsertPnl");
         cardPanel.add(new AdminNewsletterUpdate(cardPanel, cardLayout), "adminsnewsletterupdatePnl");
+        
+        cardPanel.add(new AdminSupport(cardPanel, cardLayout), "adminsupportPnl");
+        cardPanel.add(new AdminSupportUpdate(cardPanel, cardLayout), "adminsupportupdatePnl");
        }
 
     

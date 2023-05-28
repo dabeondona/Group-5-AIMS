@@ -55,21 +55,21 @@ public class AdminTopPanelButton extends JPanel {
                 cardLayout.show(cardPanel, "CalendarPnl");    
             }
         });
-        calendarButton.setBackground(new Color(0xfcca00));
+        calendarButton.setBackground(new Color(0xfcca00)); */
 
         JButton supportButton = new JButton("Support");
         supportButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                cardLayout.show(cardPanel, "supportPnl");    
+                cardLayout.show(cardPanel, "adminsupportPnl");    
             }
         }); 
-        supportButton.setBackground(new Color(0xfcca00)); */
+        supportButton.setBackground(new Color(0xfcca00)); 
 
       //  panel.add(announcementsButton);
         panel.add(newsLetterButton);
      //   panel.add(accountsButton);
      //   panel.add(calendarButton);
-    //    panel.add(supportButton);
+        panel.add(supportButton);
         return panel;
     }
 }

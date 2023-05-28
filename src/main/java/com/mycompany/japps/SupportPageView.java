@@ -47,7 +47,7 @@ public class SupportPageView extends JPanel{
                 int isSolved = (int) value;
                 if (isSolved == 1) {
                     setForeground(Color.GREEN);
-                    setText("Solved");
+                    setText("Resolved");
                 } else if (isSolved == 0) {
                     setForeground(Color.ORANGE);
                     setText("Pending");
