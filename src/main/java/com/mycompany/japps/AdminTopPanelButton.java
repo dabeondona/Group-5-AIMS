@@ -36,7 +36,7 @@ public class AdminTopPanelButton extends JPanel {
         JButton newsLetterButton = new JButton("Newsletter");
         newsLetterButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                cardLayout.show(cardPanel, "newsLetterPnl");    
+                cardLayout.show(cardPanel, "adminnewsletterPnl");    
             }
         });
         newsLetterButton.setBackground(new Color(0xfcca00));

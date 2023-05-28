@@ -97,6 +97,21 @@ public class AdminNewsletter extends JPanel {
                 cardLayout.show(cardPanel, "adminnewsletterinsertPnl");
             }
         });
+        
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "adminsnewsletterupdatePnl");
+            }
+        });
+        
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteLatestEntry();
+                refreshTable();
+            }
+        });
 
         panel.add(createButton);
         panel.add(updateButton);
@@ -142,6 +157,20 @@ public class AdminNewsletter extends JPanel {
 
         tableModel.fireTableDataChanged();
         table.repaint();
+    }
+    
+    public void deleteLatestEntry() {
+    String dbUrl = "jdbc:mysql://localhost:3306/dbhelix";
+    String dbUsername = "root";
+    String dbPassword = "";
+
+    try (Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword)) {
+        String deleteQuery = "DELETE FROM tblnewsletter WHERE news_ID = (SELECT MAX(news_ID) FROM tblnewsletter)";
+        PreparedStatement deleteStatement = conn.prepareStatement(deleteQuery);
+        deleteStatement.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
     }
 }
 
