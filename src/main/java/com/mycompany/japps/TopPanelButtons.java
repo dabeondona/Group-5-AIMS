@@ -13,6 +13,7 @@ public class TopPanelButtons extends JPanel {
         
         
     public TopPanelButtons(JPanel cardPanel, CardLayout cardLayout) {
+      
         setLayout(new BorderLayout());
         // EAST
         JButton profileIconButton = new JButton(new ImageIcon("C://Users//ondon//Pictures//default_icon.png"));
