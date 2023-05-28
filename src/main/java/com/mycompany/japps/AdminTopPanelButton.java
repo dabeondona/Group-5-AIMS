@@ -8,14 +8,6 @@ public class AdminTopPanelButton extends JPanel {
     
     public AdminTopPanelButton() {
         setLayout(new BorderLayout());
-        // EAST
-        JButton profileIconButton = new JButton(new ImageIcon("C://Users//ondon//Pictures//default_icon.png"));
-        profileIconButton.setPreferredSize(new Dimension(50,50));
-        profileIconButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-            //    cardLayout.show(cardPanel, "profilePnl");    
-            }
-        });
         
         // CENTER
    //     JPanel middlePnl = createMiddlePnl(cardPanel, cardLayout);
@@ -25,8 +17,6 @@ public class AdminTopPanelButton extends JPanel {
         JLabel placeholder = new JLabel("Admin View");
         placeholder.setForeground(new Color(0xfcca00));
         
-        
-        this.add(profileIconButton, BorderLayout.EAST);
        // this.add(middlePnl, BorderLayout.CENTER);
         this.add(placeholder, BorderLayout.WEST);
         this.setBackground(Japps.getJFrameColor());
