@@ -1,5 +1,4 @@
 package com.mycompany.japps;
-import com.mycompany.japps.Session;
 import static com.mycompany.japps.Japps.cardLayout;
 import static com.mycompany.japps.Japps.cardPanel;
 import javax.swing.*;
@@ -62,9 +61,14 @@ public class SupportPageView extends JPanel{
     String dbUrl = "jdbc:mysql://localhost:3306/dbhelix";
     String dbUsername = "root";
     String dbPassword = "";
+    int id = Session.getSessionToken();
+    
+    if(id == 0) {
+        System.out.print("ERROR ZERO VALUE");
+    }
 
     try (Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword)) {
-        int id = Session.getSessionToken();
+        
         String query = "SELECT support_ID, support_Month, support_Day, support_Title, support_IsSolved FROM tblsupport WHERE user_ID = ?";
 
         PreparedStatement statement = conn.prepareStatement(query);
