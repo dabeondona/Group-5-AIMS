@@ -79,16 +79,18 @@ public class LoginPage extends JPanel{
        
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String username = usernameTextField.getText();
+                int username = Integer.parseInt(usernameTextField.getText());
                 String password = new String(usernamePWField.getPassword());
+                Username.setUsernameToken(username);
  
-                if(login(username, password) && isAdmin(username, password)) {
-                   Username.setUsernameToken(Integer.parseInt(username));
-                   cardLayout.show(cardPanel, "adminnewsletterPnl");  
+                if(username>23240000) {
+                    cardLayout.show(cardPanel, "announcementPnl");
+                   
+                   
                    
                 } else if(login(username, password)) {
                     
-                    cardLayout.show(cardPanel, "announcementPnl");
+                    cardLayout.show(cardPanel, "adminnewsletterPnl");  
                           
                 } else {
                     JOptionPane.showMessageDialog(LoginPage.this, "Incorrect Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
@@ -147,7 +149,7 @@ public class LoginPage extends JPanel{
         return panel;
     }
     
-    public boolean login(String username, String password) {
+    public boolean login(int username, String password) {
         String dbUrl = "jdbc:mysql://localhost:3306/dbhelix"; // Replace dbname with your actual database name
         String dbUsername = "root";
         String dbPassword = "";
@@ -155,7 +157,7 @@ public class LoginPage extends JPanel{
         try (Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword)) {
             String query = "SELECT * FROM tbluser WHERE username = ?";
             PreparedStatement statement = conn.prepareStatement(query);
-            statement.setString(1, username);
+            statement.setInt(1, username);
 
             ResultSet resultSet = statement.executeQuery();
            
@@ -164,7 +166,7 @@ public class LoginPage extends JPanel{
                 String storedPassword = resultSet.getString("password");
                 
                 if (password.equals(storedPassword)) {
-                    Username.setUsernameToken(Integer.parseInt(username));
+                    Username.setUsernameToken(username);
                     int id = resultSet.getInt("id");
                     Session.setSessionToken(id);
                     return true;
@@ -180,7 +182,7 @@ public class LoginPage extends JPanel{
         }
     }
 
-    public boolean isAdmin(String username, String password) {
+    /*public boolean isAdmin(String username, String password) {
     String dbUrl = "jdbc:mysql://localhost:3306/dbhelix";
     String dbUsername = "root";
     String dbPassword = "";
@@ -209,7 +211,7 @@ public class LoginPage extends JPanel{
         // Handle any potential database errors
         return false;
         }
-    }
+    }*/
 
     
 }
