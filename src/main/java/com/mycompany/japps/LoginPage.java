@@ -88,11 +88,11 @@ public class LoginPage extends JPanel{
                 String password = new String(usernamePWField.getPassword());
  
                 if(login(username, password) && isAdmin(username, password)) {
-                   Username.setUsernameToken(username);
+                   Username.setUsernameToken(Integer.parseInt(username));
                    cardLayout.show(cardPanel, "adminnewsletterPnl");  
                    
                 } else if(login(username, password)) {
-                    Username.setUsernameToken(username);
+                    
                     cardLayout.show(cardPanel, "announcementPnl");
                           
                 } else {
@@ -169,6 +169,7 @@ public class LoginPage extends JPanel{
                 String storedPassword = resultSet.getString("password");
                 
                 if (password.equals(storedPassword)) {
+                    Username.setUsernameToken(Integer.parseInt(username));
                     int id = resultSet.getInt("id");
                     Session.setSessionToken(id);
                     return true;

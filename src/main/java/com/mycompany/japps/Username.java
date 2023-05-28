@@ -9,13 +9,13 @@ package com.mycompany.japps;
  * @author alest
  */
 public class Username {
-    private static String username = "test";
+    private static int username;
     
-    public static void setUsernameToken(String uname) {
+    public static void setUsernameToken(int uname) {
         username = uname;
     }
     
-    public static String getUsernameToken() {
+    public static int getUsernameToken() {
         return username;
     }
 

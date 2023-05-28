@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 
 public class ForgetPasswordGUI extends JPanel {
 
@@ -11,23 +12,57 @@ public class ForgetPasswordGUI extends JPanel {
     private JTextField phoneTextField;
 
     public ForgetPasswordGUI(JPanel cardPanel, CardLayout cardLayout) {
-   
+
         setSize(400, 300);
 
-        //3 components
+        // 3 components
         JLabel titleLabel = new JLabel("Reset Your Password");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setForeground(Color.WHITE);
-        JLabel emailLabel = new JLabel("Email or Phone:");
+        JLabel emailLabel = new JLabel("Username:");
         emailTextField = new JTextField(20);
-        JLabel phoneLabel = new JLabel("Mobile Number:");
+        JLabel phoneLabel = new JLabel("Email:");
         phoneTextField = new JTextField(20);
         JButton searchButton = new JButton("Search");
         JButton cancelButton = new JButton("Cancel");
-        
-        cancelButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                cardLayout.show(cardPanel, "login");   
+
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "login");
+            }
+        });
+
+        searchButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String inputUsername = emailTextField.getText().trim();
+                String inputEmail = phoneTextField.getText().trim();
+
+                // Connect to the database
+                try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbhelix", "root", "")) {
+                    // Create a statement
+                    PreparedStatement statement = connection.prepareStatement("SELECT email FROM tblsttudent as s, tblregister as r, tbluser as u WHERE r.register_id = s.register_id AND s.studentID = u.username AND  u.username = ?");
+                    statement.setString(1,inputUsername);
+
+                    // Execute the query
+                    ResultSet resultSet = statement.executeQuery();
+
+                    // Check if the username exists in the database
+                    if (resultSet.next()) {
+                        String fetchedEmail = resultSet.getString("email");
+
+                        // Compare the fetched data with the inputted values
+                        if (inputEmail.equals(fetchedEmail)) {
+                            JOptionPane.showMessageDialog(null, "Email and phone matched!");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Email and phone do not match!");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Username not found!");
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Error occurred while connecting to the database.");
+                }
             }
         });
 
@@ -35,8 +70,8 @@ public class ForgetPasswordGUI extends JPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         panel.setBackground(Color.decode("#a83332"));
-        
-        //para layout
+
+        // para layout
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -87,6 +122,6 @@ public class ForgetPasswordGUI extends JPanel {
         this.add(boxPanel, BorderLayout.CENTER);
         this.setVisible(true);
     }
-
 }
+
 

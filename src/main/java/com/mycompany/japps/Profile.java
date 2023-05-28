@@ -79,7 +79,7 @@ public class Profile extends JPanel{
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
  
-        String username = "";
+        int username;
         username = Username.getUsernameToken();
         
         JPanel buttons = new JPanel();
