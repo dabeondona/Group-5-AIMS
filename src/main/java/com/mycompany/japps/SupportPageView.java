@@ -13,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 
 public class SupportPageView extends JPanel{
     
+    
     public SupportPageView(JPanel cardPanel, CardLayout cardLayout) {
         this.setName(Japps.getGUIName());
         this.setLayout(new BorderLayout());
@@ -61,18 +62,13 @@ public class SupportPageView extends JPanel{
     String dbUrl = "jdbc:mysql://localhost:3306/dbhelix";
     String dbUsername = "root";
     String dbPassword = "";
-    int id = Session.getSessionToken();
-    
-    if(id == 0) {
-        System.out.print("ERROR ZERO VALUE");
-    }
 
     try (Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword)) {
         
         String query = "SELECT support_ID, support_Month, support_Day, support_Title, support_IsSolved FROM tblsupport WHERE user_ID = ?";
 
         PreparedStatement statement = conn.prepareStatement(query);
-        statement.setInt(1, id);
+        statement.setInt(1, Session.getSessionToken());
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()) {
@@ -97,11 +93,6 @@ public class SupportPageView extends JPanel{
 
     return panel;
 }
-
-
-
-
-
     
     public JPanel createBottomPnl(JPanel cardPanel, CardLayout cardLayout) {
         JPanel panel = new JPanel();

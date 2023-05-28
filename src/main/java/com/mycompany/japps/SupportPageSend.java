@@ -13,7 +13,7 @@ import java.time.format.TextStyle;
 
 public class SupportPageSend extends JPanel{
     
-    
+    static int jumbo = 0;
     
     public SupportPageSend(JPanel cardPanel, CardLayout cardLayout) {
         this.setLayout(new BorderLayout());
@@ -91,6 +91,7 @@ public class SupportPageSend extends JPanel{
 
     try(Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword)) {
         String query = "INSERT INTO tblsupport (support_Month, support_Day, support_Time, support_Title, support_Description, support_IsSolved, user_ID) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        jumbo = Session.getSessionToken();
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1, currentMonth);
         statement.setInt(2, currentDay);
