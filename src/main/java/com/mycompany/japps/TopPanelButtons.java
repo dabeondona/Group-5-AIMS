@@ -52,6 +52,7 @@ public class TopPanelButtons extends JPanel {
                 cardLayout.show(cardPanel, "announcementPnl");   
             }
         });
+
         announcementsButton.setBackground(new Color(0xfcca00));
 
         JButton newsLetterButton = new JButton("Newsletter");
@@ -60,6 +61,7 @@ public class TopPanelButtons extends JPanel {
                 cardLayout.show(cardPanel, "newsLetterPnl");    
             }
         });
+
         newsLetterButton.setBackground(new Color(0xfcca00));
         
         JButton accountsButton = new JButton("Accounts");
@@ -83,6 +85,7 @@ public class TopPanelButtons extends JPanel {
             public void actionPerformed(ActionEvent e){
                 cardLayout.show(cardPanel, "supportPnl");    
             }
+
         }); 
         supportButton.setBackground(new Color(0xfcca00));
 
