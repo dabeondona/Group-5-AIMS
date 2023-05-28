@@ -36,7 +36,6 @@ public class Profile extends JPanel{
         this.setName(Japps.getGUIName());
         this.setLayout(new BorderLayout());
         
-        fetchData();
         
         this.add(new TopPanelButtons(cardPanel, cardLayout), BorderLayout.NORTH);
         this.add( createMiddlePnl(cardPanel, cardLayout), BorderLayout.CENTER);
@@ -142,6 +141,9 @@ public class Profile extends JPanel{
         dialog.add(contactNumberCheckbox);
         dialog.add(bloodTypeCheckbox);
         dialog.add(maritalStatusCheckbox);
+        
+        fetchData();
+
 
         JButton applyButton = new JButton("Apply");
         applyButton.addActionListener(new ActionListener() {
@@ -192,19 +194,17 @@ public class Profile extends JPanel{
     }
     
     public void fetchData() {
-        int username = Username.getUsernameToken();
-        System.out.println(username);
-        
         try {
             // Establish a database connection
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbhelix", "root", "");
-
+            System.out.println("cxvdsf"+Username.getUsernameToken());
             // Create a statement
             PreparedStatement statement = connection.prepareStatement("SELECT lastName, department, program,yearLevel, bloodType,email, contactNumber, maritalStatus FROM tblsttudent as s, tblregister as r, tbluser as u WHERE r.register_id = s.register_id AND s.studentID = u.username AND  u.username = ?");
-            statement.setInt(1,username);
+            statement.setInt(1, Username.getUsernameToken());
+
             // Execute a query to fetch the data
             ResultSet resultSet = statement.executeQuery();
-            
+
             // Check if there is a result
             if (resultSet.next()) {
                 // Retrieve the values from the result set
@@ -227,6 +227,7 @@ public class Profile extends JPanel{
             e.printStackTrace();
         }
     }
+
 
 
 
