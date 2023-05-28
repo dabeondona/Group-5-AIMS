@@ -18,8 +18,7 @@ public class SettingsScreen extends JPanel {
         this.add( createMiddlePnl(), BorderLayout.CENTER);
        
         this.setSize(Japps.getGUIWidth(),Japps.getGUIHeight());
-        this.setVisible(true);
-        
+        this.setVisible(true);  
     }
     
     public JPanel createTitlePnl() {
