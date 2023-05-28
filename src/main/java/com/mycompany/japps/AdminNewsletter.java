@@ -16,4 +16,14 @@ public class AdminNewsletter extends JPanel {
         this.setSize(Japps.getGUIWidth(),Japps.getGUIHeight());
         this.setVisible(true);
     }
+    
+    public JPanel createMiddlePnl() {
+        JPanel panel = new JPanel();
+        
+        
+        
+        return panel;
+    }
 }
+
+

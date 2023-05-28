@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.japps;
-
+import static com.mycompany.japps.Japps.cardLayout;
+import static com.mycompany.japps.Japps.cardPanel;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;

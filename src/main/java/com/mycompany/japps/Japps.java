@@ -45,7 +45,8 @@ public class Japps extends JFrame {
             public void run() {
                 new Japps();
             }
-        }); 
+        });
+        //  new SettingsScreen(cardPanel, cardLayout);
        }
     
     /*
