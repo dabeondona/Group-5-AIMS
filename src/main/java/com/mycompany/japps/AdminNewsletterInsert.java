@@ -60,7 +60,10 @@ public class AdminNewsletterInsert extends JPanel {
         JPanel panel = new JPanel();
        
         JButton backButton = new JButton("Back");
+        backButton.setBackground(new Color(0xfcca00)); 
+        
         JButton insertButton = new JButton("Insert");
+        insertButton.setBackground(new Color(0xfcca00));    
         
         backButton.addActionListener(new ActionListener() {
             @Override

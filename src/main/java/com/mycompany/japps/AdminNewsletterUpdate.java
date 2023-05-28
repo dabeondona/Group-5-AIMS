@@ -25,6 +25,7 @@ public class AdminNewsletterUpdate extends JPanel {
         this.setLayout(new BorderLayout());
         
         this.add(new AdminTopPanelButton(cardPanel, cardLayout), BorderLayout.NORTH);
+        this.add(new JLabel("                                             "), BorderLayout.WEST);
         this.add(createMiddlePnl(cardPanel, cardLayout), BorderLayout.CENTER);
         this.add(createBottomPnl(cardPanel, cardLayout), BorderLayout.SOUTH);
         
@@ -32,41 +33,44 @@ public class AdminNewsletterUpdate extends JPanel {
         this.setVisible(true);
     }
     
-    public JPanel createMiddlePnl(JPanel cardPanel, CardLayout cardLayout) {
-    JPanel panel = new JPanel();
-    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    
-        JPanel idPnl = new JPanel();
-        idField = new JTextField(25);
+     public JPanel createMiddlePnl(JPanel cardPanel, CardLayout cardLayout) {
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        idPnl.add(new JLabel("ID: "));
-        idPnl.add(idField);
+                JPanel idPnl = new JPanel();
+                idField = new JTextField(25);
 
-        JPanel titlePnl = new JPanel();
-        titleField = new JTextField(25);
+                idPnl.add(new JLabel("ID: "));
+                idPnl.add(idField);
 
-        titlePnl.add(new JLabel("Title: "));
-        titlePnl.add(titleField);
+                JPanel titlePnl = new JPanel();
+                titleField = new JTextField(25);
 
-        JPanel contentPnl = new JPanel();
+                titlePnl.add(new JLabel("Title: "));
+                titlePnl.add(titleField);
 
-        contentArea = new JTextArea();
-        contentArea.setColumns(25);
-        contentArea.setRows(15);
-        contentPnl.add(new JScrollPane(contentArea));
-        
-        panel.add(idPnl);
-        panel.add(titlePnl);
-        panel.add(contentPnl);
+                JPanel contentPnl = new JPanel();
 
-    return panel;
-}
+                contentArea = new JTextArea();
+                contentArea.setColumns(25);
+                contentArea.setRows(15);
+                contentPnl.add(new JScrollPane(contentArea));
+
+                panel.add(idPnl);
+                panel.add(titlePnl);
+                panel.add(contentPnl);
+
+            return panel;
+        }
     
     public JPanel createBottomPnl(JPanel cardPanel, CardLayout cardLayout) {
         JPanel panel = new JPanel();
        
         JButton backButton = new JButton("Back");
+        backButton.setBackground(new Color(0xfcca00)); 
+        
         JButton updateButton = new JButton("Update");
+        updateButton.setBackground(new Color(0xfcca00)); 
         
         backButton.addActionListener(new ActionListener() {
             @Override

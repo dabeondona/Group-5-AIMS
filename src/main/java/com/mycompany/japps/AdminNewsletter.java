@@ -88,8 +88,13 @@ public class AdminNewsletter extends JPanel {
         JPanel panel = new JPanel();
 
         JButton createButton = new JButton("Insert");
+        createButton.setBackground(new Color(0xfcca00)); 
+        
         JButton updateButton = new JButton("Update");
+        updateButton.setBackground(new Color(0xfcca00)); 
+        
         JButton deleteButton = new JButton("Delete");
+        deleteButton.setBackground(new Color(0xfcca00)); 
 
         createButton.addActionListener(new ActionListener() {
             @Override
@@ -118,6 +123,8 @@ public class AdminNewsletter extends JPanel {
         panel.add(deleteButton);
 
         JButton refreshButton = new JButton("Refresh");
+        refreshButton.setBackground(new Color(0xfcca00)); 
+        
         refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

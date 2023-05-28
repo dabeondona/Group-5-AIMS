@@ -30,7 +30,18 @@ public class AdminSupportUpdate extends JPanel {
 
     public JPanel createMiddlePnl(JPanel cardPanel, CardLayout cardLayout) {
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new BorderLayout());
+        JPanel oldPanel = new JPanel();
+        oldPanel.setLayout(new GridBagLayout());
+
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        constraints.weightx = 1.0;
+        constraints.weighty = 1.0;
+        constraints.anchor = GridBagConstraints.WEST; 
 
         JPanel idPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel idLabel = new JLabel("Support ID:");
@@ -41,19 +52,37 @@ public class AdminSupportUpdate extends JPanel {
         resolvedCheckBox = new JCheckBox("Mark as Resolved");
         unresolvedCheckBox = new JCheckBox("Mark as Unresolved");
 
-        panel.add(idPanel);
-        panel.add(resolvedCheckBox);
-        panel.add(unresolvedCheckBox);
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 2;
+        constraints.insets = new Insets(0, 0, 10, 0); 
+        oldPanel.add(idPanel, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 1;
+        constraints.insets = new Insets(0, 0, 0, 0); 
+        oldPanel.add(resolvedCheckBox, constraints);
+
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        oldPanel.add(unresolvedCheckBox, constraints);
+
+        panel.add(oldPanel, BorderLayout.CENTER);
 
         return panel;
-    }
+        }
+
 
     public JPanel createBottomPnl(JPanel cardPanel, CardLayout cardLayout) {
         JPanel panel = new JPanel();
 
         JButton backButton = new JButton("Back");
+        backButton.setBackground(new Color(0xfcca00)); 
+        
         JButton updateButton = new JButton("Update");
-
+        updateButton.setBackground(new Color(0xfcca00)); 
+        
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

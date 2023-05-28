@@ -86,7 +86,6 @@ public class AdminSupport extends JPanel {
                 setHorizontalAlignment(SwingConstants.CENTER);
                 setText(value.toString());
 
-                // Set font color based on the status value
                 if (value.toString().equals("Pending")) {
                     setForeground(Color.ORANGE);
                 } else if (value.toString().equals("Resolved")) {
@@ -97,8 +96,6 @@ public class AdminSupport extends JPanel {
             }
         };
         table.getColumnModel().getColumn(6).setCellRenderer(statusCellRenderer);
-
-        // Set preferred column widths
         table.getColumnModel().getColumn(0).setPreferredWidth(50);
         table.getColumnModel().getColumn(1).setPreferredWidth(100);
         table.getColumnModel().getColumn(2).setPreferredWidth(50);
@@ -117,7 +114,10 @@ public class AdminSupport extends JPanel {
         JPanel panel = new JPanel();
         
         JButton updateButton = new JButton("Update");
+        updateButton.setBackground(new Color(0xfcca00)); 
+        
         JButton deleteButton = new JButton("Delete");
+        deleteButton.setBackground(new Color(0xfcca00)); 
         
         updateButton.addActionListener(new ActionListener() {
             @Override
@@ -135,6 +135,8 @@ public class AdminSupport extends JPanel {
         });
 
         JButton refreshButton = new JButton("Refresh");
+        refreshButton.setBackground(new Color(0xfcca00)); 
+        
         refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

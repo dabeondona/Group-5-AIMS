@@ -13,84 +13,38 @@ import java.sql.SQLException;
 public class TestClass extends JFrame {
 
     public TestClass() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Test Table");
-        setSize(500, 400);
+         JFrame frame = new JFrame("GridBagLayout Example");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Create the table model
-        DefaultTableModel tableModel = new DefaultTableModel();
-        tableModel.addColumn("ID");
-        tableModel.addColumn("Month");
-        tableModel.addColumn("Day");
-        tableModel.addColumn("Title");
-        tableModel.addColumn("Status");
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
 
-        // Create the table
-        JTable table = new JTable(tableModel);
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        constraints.weightx = 1.0;
+        constraints.weighty = 1.0;
+        constraints.fill = GridBagConstraints.BOTH;
 
-        // Set cell renderer for the "Status" column
-        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        JButton button1 = new JButton("Button 1");
+        panel.add(button1, constraints);
 
-                if (value != null) {
-                    int isSolved = (int) value;
-                    if (isSolved == 1) {
-                        setForeground(Color.GREEN);
-                        setText("Solved");
-                    } else if (isSolved == 0) {
-                        setForeground(Color.ORANGE);
-                        setText("Pending");
-                    }
-                }
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        JButton button2 = new JButton("Button 2");
+        panel.add(button2, constraints);
 
-                setHorizontalAlignment(SwingConstants.CENTER);
-                return this;
-            }
-        };
-        table.getColumnModel().getColumn(4).setCellRenderer(cellRenderer);
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 2;
+        JButton button3 = new JButton("Button 3");
+        panel.add(button3, constraints);
 
-        // Create the database connection and retrieve data
-        String dbUrl = "jdbc:mysql://localhost:3306/dbhelix";
-        String dbUsername = "root";
-        String dbPassword = "";
-
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword)) {
-            Session.setSessionToken(4);
-            int userID = Session.getSessionToken(); // Set the user ID here
-
-            String query = "SELECT support_ID, support_Month, support_Day, support_Title, support_IsSolved FROM tblsupport WHERE user_ID = ?";
-
-            PreparedStatement statement = conn.prepareStatement(query);
-            statement.setInt(1, userID);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                Object[] rowData = new Object[5];
-                rowData[0] = resultSet.getInt("support_ID");
-                rowData[1] = resultSet.getString("support_Month");
-                rowData[2] = resultSet.getInt("support_Day");
-                rowData[3] = resultSet.getString("support_Title");
-                rowData[4] = resultSet.getInt("support_IsSolved");
-                tableModel.addRow(rowData);
-            }
-
-            // Set the table model again after populating data
-            table.setModel(tableModel);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle any potential database errors
-        }
-
-        // Add the table to a scroll pane
-        JScrollPane scrollPane = new JScrollPane(table);
-
-        // Add the scroll pane to the frame's content pane
-        getContentPane().add(scrollPane);
-
-        setVisible(true);
+        frame.getContentPane().add(panel);
+        frame.pack();
+        frame.setVisible(true);
     }
 }
 

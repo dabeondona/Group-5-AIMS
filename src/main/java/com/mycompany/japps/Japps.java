@@ -46,7 +46,7 @@ public class Japps extends JFrame {
                 new Japps();
             }
         }); 
-       // new TestClass();
+      //  new TestClass();
        }
     
     private void CardPanel() {
