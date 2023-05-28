@@ -75,7 +75,9 @@ public class TopPanelButtons extends JPanel {
         JButton calendarButton = new JButton("Calendar");
         calendarButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                cardLayout.show(cardPanel, "calendarPnl");    
+                int id = Integer.parseInt(Username.getUsernameToken());
+                    cardLayout.show(cardPanel, "studentCalendarPnl");
+  
             }
         });
         calendarButton.setBackground(new Color(0xfcca00));

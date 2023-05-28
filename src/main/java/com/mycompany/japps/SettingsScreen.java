@@ -6,14 +6,56 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SettingsScreen extends JFrame {
+public class SettingsScreen extends JPanel {
 
-    public SettingsScreen() {
-        setTitle("Helix Settings");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 400);
-        setLocationRelativeTo(null); // Center the window on the screen
+    public SettingsScreen(JPanel cardPanel, CardLayout cardLayout) {
+        this.setName(Japps.getGUIName());
+        this.setLayout(new BorderLayout());
+        
+        
+        
+        this.add(new TopPanelButtons(cardPanel, cardLayout), BorderLayout.NORTH);
+        this.add( createMiddlePnl(), BorderLayout.CENTER);
+       
+        this.setSize(Japps.getGUIWidth(),Japps.getGUIHeight());
+        this.setVisible(true);
+        
+    }
+    
+    public JPanel createTitlePnl() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        
+        JLabel titleLabel = new JLabel("Settigns");
+        Font font = titleLabel.getFont();
+        font = new Font(font.getName(), font.getStyle(), 35);
+        titleLabel.setFont(font);
+        panel.add(titleLabel);
+        
+        panel.setBackground(new Color(0xfcca00));
+        panel.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK));
+        
+        return panel;     
+    }
+    
+    public JPanel createMiddlePnl() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JPanel titlePnl = createTitlePnl();
+        panel.add(titlePnl);
+        
+        panel.add(Box.createVerticalGlue()); 
 
+        panel.add(settingsPnl());
+        
+        
+        
+        
+        return panel;
+    }
+    
+    public JPanel settingsPnl(){
+        JPanel panel = new JPanel();
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(Color.decode("#8c383e"));
 
@@ -120,8 +162,11 @@ public class SettingsScreen extends JFrame {
         mainPanel.add(tabbedPane, BorderLayout.CENTER);
 
         // add main panel to the frames content pane
-        setContentPane(mainPanel);
-        this.setVisible(true);
+        //setContentPane(mainPanel);
+        //this.setVisible(true);
+        
+        panel.add(mainPanel);
+        return panel;
     }
 
 }

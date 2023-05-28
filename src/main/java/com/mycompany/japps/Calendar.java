@@ -11,6 +11,7 @@ package com.mycompany.japps;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.*;
 
 public class Calendar extends JPanel{
     private JLabel monthLabel;
@@ -164,9 +165,33 @@ public class Calendar extends JPanel{
             // Open a dialog to add an event for the selected day
             String event = JOptionPane.showInputDialog(Calendar.this, "Add event for day " + day + ":");
             if (event != null && !event.isEmpty()) {
+                // Add the event to the database
+                addEventToDatabase(day, event);
                 JOptionPane.showMessageDialog(Calendar.this, "Event added: " + event);
-                // You can handle the event data here (e.g., store it in a database)
+                updateDayButtons(); // Refresh the calendar view
             }
         }
     }
+    
+    private void addEventToDatabase(int day, String event) {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbhelix", "root", "");
+            String query = "INSERT INTO tblcalendar (day, month, year, event) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, day);
+            statement.setInt(2, currentMonth + 1); // Month in Calendar starts from 0, so add 1
+            statement.setInt(3, currentYear);
+            statement.setString(4, event);
+            statement.executeUpdate();
+
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+
+
+
 }

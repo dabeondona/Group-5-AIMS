@@ -35,7 +35,7 @@ public class Profile extends JPanel{
         
         
         this.add(new TopPanelButtons(cardPanel, cardLayout), BorderLayout.NORTH);
-        this.add( createMiddlePnl(), BorderLayout.CENTER);
+        this.add( createMiddlePnl(cardPanel, cardLayout), BorderLayout.CENTER);
        
         this.setSize(Japps.getGUIWidth(),Japps.getGUIHeight());
         this.setVisible(true);
@@ -57,7 +57,7 @@ public class Profile extends JPanel{
         return panel;     
     }
     
-    public JPanel createMiddlePnl() {
+    public JPanel createMiddlePnl(JPanel cardPanel, CardLayout cardLayout) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel titlePnl = createTitlePnl();
@@ -65,7 +65,7 @@ public class Profile extends JPanel{
         
         panel.add(Box.createVerticalGlue()); 
 
-        panel.add(profileDetPnl());
+        panel.add(profileDetPnl(cardPanel, cardLayout));
         
         
         
@@ -73,7 +73,7 @@ public class Profile extends JPanel{
         return panel;
     }
     
-    public JPanel profileDetPnl(){
+    public JPanel profileDetPnl(JPanel cardPanel, CardLayout cardLayout){
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         nameLabel = new JLabel("Name: John Doe");
@@ -81,51 +81,38 @@ public class Profile extends JPanel{
         programLabel = new JLabel("Program: Bachelor of Science in Computer Science");
         yearLabel = new JLabel("Year: 3rd Year");
         bloodType = new JLabel("Blood Type: O+");
-        
+        String username = "";
+        username = Username.getUsernameToken();
 
         // Create label for photo
         photoLabel = new JLabel("No Photo Available", SwingConstants.CENTER);
         photoLabel.setPreferredSize(new Dimension(200, 200));
         photoLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-        JPanel buttons = new JPanel();
-        buttons.setLayout(new GridLayout(1, 2));
-        // Create upload button
-        uploadButton = new JButton("Upload Photo");
-        uploadButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png");
-                fileChooser.setFileFilter(filter);
-
-                int result = fileChooser.showOpenDialog(Profile.this);
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-                    ImageIcon imageIcon = new ImageIcon(filePath);
-                    photoLabel.setIcon(imageIcon);
-                }
-            }
-        });
-       
-        editButton = new JButton("Customize Profile");
-        editButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Save the username to the database
+        // Save the username to the database
                 try {
                     // Establish a connection to the database
                     Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbhelix", "root", "");
 
+                    
                     // Check if the username already exists in the database
                     String searchQuery = "SELECT * FROM tblprofile WHERE username = ?";
                     PreparedStatement searchStmt = conn.prepareStatement(searchQuery);
-                    searchStmt.setString(1, Username.getUsernameToken());
+                    searchStmt.setString(1, username);
+                    
                     ResultSet resultSet = searchStmt.executeQuery();
 
                     if (resultSet.next()) {
                         // The username already exists in the database
                         System.out.println("Username already exists");
+
+                        // Retrieve the photo path from the result set
+                        String photoPath = resultSet.getString("photo_path");
+                        if (photoPath != null && !photoPath.isEmpty()) {
+                            ImageIcon imageIcon = new ImageIcon(photoPath);
+                            photoLabel.setIcon(imageIcon);
+                            System.out.println("Success");
+                        }
                     } else {
                         // Prepare the SQL statement to insert the username
                         String insertQuery = "INSERT INTO tblprofile (username) VALUES (?)";
@@ -147,6 +134,71 @@ public class Profile extends JPanel{
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
+                
+                // Add components to the frame
+        panel.add(photoLabel, BorderLayout.WEST);
+
+                
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new GridLayout(1, 3));
+        // Create upload button
+        uploadButton = new JButton("Upload Photo");
+        uploadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png");
+                fileChooser.setFileFilter(filter);
+
+                int result = fileChooser.showOpenDialog(Profile.this);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+
+                    // Update the code below to handle photo upload and storage in your database
+                    // Update the code below to handle photo upload and storage in your database
+                    String username = Username.getUsernameToken(); // Replace with the actual username
+
+                    if (username != null && !username.isEmpty()) {
+                        try {
+                            // Establish a connection to the database
+                            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbhelix", "root", "");
+
+                            // Prepare the UPDATE statement
+                            String query = "UPDATE tblprofile SET photo_path = ? WHERE username = ?";
+                            PreparedStatement statement = connection.prepareStatement(query);
+                            statement.setString(1, filePath);
+                            statement.setString(2, username);
+
+                            // Execute the UPDATE statement
+                            int rowsUpdated = statement.executeUpdate();
+                            if (rowsUpdated > 0) {
+                                System.out.println("Photo path updated successfully.");
+                            } else {
+                                System.out.println("Failed to update photo path.");
+                            }
+
+                            // Close the statement and connection
+                            statement.close();
+                            connection.close();
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+
+                        ImageIcon imageIcon = new ImageIcon(filePath);
+                        photoLabel.setIcon(imageIcon);
+                    } else {
+                        System.out.println("Invalid username.");
+                    }
+
+                }}
+
+        });
+       
+        editButton = new JButton("Customize Profile");
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
                 // Show the checkboxes
                 String[] options = {"Name", "Department", "Program", "Year Level", "Email", "Contact Number", "Blood Type", "Marital Status"};
 
@@ -197,14 +249,14 @@ public class Profile extends JPanel{
                         PreparedStatement stmt = conn.prepareStatement(sql);
 
                         // Set the values for each column
-                        stmt.setString(1, optionMap.getOrDefault("Name", true) ? "Selected" : "Not Selected");
-                        stmt.setString(2, optionMap.getOrDefault("Department", true) ? "Selected" : "Not Selected");
-                        stmt.setString(3, optionMap.getOrDefault("Program", true) ? "Selected" : "Not Selected");
-                        stmt.setString(4, optionMap.getOrDefault("Year Level", true) ? "Selected" : "Not Selected");
-                        stmt.setString(5, optionMap.getOrDefault("Email", true) ? "Selected" : "Not Selected");
-                        stmt.setString(6, optionMap.getOrDefault("Contact Number", true) ? "Selected" : "Not Selected");
-                        stmt.setString(7, optionMap.getOrDefault("Blood Type", true) ? "Selected" : "Not Selected");
-                        stmt.setString(8, optionMap.getOrDefault("Marital Status", true) ? "Selected" : "Not Selected");
+                        stmt.setString(1, optionMap.getOrDefault("Name", false) ? "Selected" : "Not Selected");
+                        stmt.setString(2, optionMap.getOrDefault("Department", false) ? "Selected" : "Not Selected");
+                        stmt.setString(3, optionMap.getOrDefault("Program", false) ? "Selected" : "Not Selected");
+                        stmt.setString(4, optionMap.getOrDefault("Year Level", false) ? "Selected" : "Not Selected");
+                        stmt.setString(5, optionMap.getOrDefault("Email", false) ? "Selected" : "Not Selected");
+                        stmt.setString(6, optionMap.getOrDefault("Contact Number", false) ? "Selected" : "Not Selected");
+                        stmt.setString(7, optionMap.getOrDefault("Blood Type", false) ? "Selected" : "Not Selected");
+                        stmt.setString(8, optionMap.getOrDefault("Marital Status", false) ? "Selected" : "Not Selected");
 
                         // Execute the INSERT statement
                         stmt.executeUpdate();
@@ -222,7 +274,7 @@ public class Profile extends JPanel{
         settingsButton = new JButton("Settings");
         settingsButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                
+                cardLayout.show(cardPanel, "settingPnl");
             }
         });
 
@@ -230,9 +282,9 @@ public class Profile extends JPanel{
         
         buttons.add(uploadButton);
         buttons.add(editButton);
+        buttons.add(settingsButton);
 
-        // Add components to the frame
-        panel.add(photoLabel, BorderLayout.WEST);
+        
         
 
         JPanel detailsPanel = new JPanel();

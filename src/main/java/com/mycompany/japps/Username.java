@@ -9,7 +9,7 @@ package com.mycompany.japps;
  * @author alest
  */
 public class Username {
-    private static String username;
+    private static String username = "test";
     
     public static void setUsernameToken(String uname) {
         username = uname;
