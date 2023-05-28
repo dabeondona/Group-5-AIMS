@@ -78,7 +78,9 @@ public class Japps extends JFrame {
         cardPanel.add(new Profile(cardPanel, cardLayout), "profilePnl");
         cardPanel.add(new SettingsScreen(cardPanel, cardLayout), "settingsPnl");
         cardPanel.add(new Calendar(cardPanel, cardLayout), "calendarPnl");
+        
         cardPanel.add(new StudentCalendar(cardPanel, cardLayout), "studentCalendarPnl");
+        cardPanel.add(new AdminNewsletter(cardPanel, cardLayout), "adminnewsletterPnl");
        }
 
     

@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class AdminTopPanelButton extends JPanel {
     
-    public AdminTopPanelButton() {
+    public AdminTopPanelButton(JPanel cardPanel, CardLayout cardLayout) {
         setLayout(new BorderLayout());
         
         // CENTER

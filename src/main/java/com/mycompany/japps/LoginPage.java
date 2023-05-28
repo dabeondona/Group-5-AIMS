@@ -86,10 +86,14 @@ public class LoginPage extends JPanel{
                 String username = usernameTextField.getText();
                 String password = new String(usernamePWField.getPassword());
  
-                if (login(username, password)) {
+                if(login(username, password) && isAdmin(username, password)) {
                    Username.setUsernameToken(username);
-                   cardLayout.show(cardPanel, "announcementPnl");  
+                   cardLayout.show(cardPanel, "adminnewsletterPnl");  
                    
+                } else if(login(username, password)) {
+                    Username.setUsernameToken(username);
+                    cardLayout.show(cardPanel, "announcementPnl");
+                          
                 } else {
                     JOptionPane.showMessageDialog(LoginPage.this, "Incorrect Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -135,7 +139,6 @@ public class LoginPage extends JPanel{
         signUpButton.setBorder(BorderFactory.createEmptyBorder());
         signUpPanel.add(signUpButton);
         
-        //added action listener to signUpButton to direct to registration
         signUpButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 cardLayout.show(cardPanel, "registerPnl");    
@@ -178,6 +181,36 @@ public class LoginPage extends JPanel{
         }
     }
 
-    
+    public boolean isAdmin(String username, String password) {
+    String dbUrl = "jdbc:mysql://localhost:3306/dbhelix";
+    String dbUsername = "root";
+    String dbPassword = "";
+
+    try (Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword)) {
+        String query = "SELECT * FROM tbluser WHERE username = ?";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setString(1, username);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            String storedPassword = resultSet.getString("password");
+            int isAdminValue = resultSet.getInt("isAdmin");
+
+            if (password.equals(storedPassword) && isAdminValue == 1) {
+                int userId = resultSet.getInt("id");
+                Session.setSessionToken(userId);
+                return true;
+            }
+        }
+
+        return false;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        // Handle any potential database errors
+        return false;
+        }
+    }
+
     
 }
