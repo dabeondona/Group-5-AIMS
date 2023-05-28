@@ -191,6 +191,36 @@ public class Calendar extends JPanel{
         }
     }
     
+    private void viewEvents(int day) {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbhelix", "root", "");
+            String query = "SELECT event FROM tblcalendar WHERE day = ? AND month = ? AND year = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, day);
+            statement.setInt(2, currentMonth + 1); // Month in Calendar starts from 0, so add 1
+            statement.setInt(3, currentYear);
+            ResultSet resultSet = statement.executeQuery();
+
+            StringBuilder events = new StringBuilder();
+            while (resultSet.next()) {
+                String event = resultSet.getString("event");
+                events.append(event).append("\n");
+            }
+
+            if (events.length() > 0) {
+                JOptionPane.showMessageDialog(Calendar.this, "Events for day " + day + ":\n" + events.toString());
+            } else {
+                JOptionPane.showMessageDialog(Calendar.this, "No events found for day " + day);
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
 
 
