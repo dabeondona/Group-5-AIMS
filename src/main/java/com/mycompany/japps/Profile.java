@@ -274,7 +274,7 @@ public class Profile extends JPanel{
         settingsButton = new JButton("Settings");
         settingsButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                cardLayout.show(cardPanel, "settingPnl");
+                cardLayout.show(cardPanel, "settingsPnl");
             }
         });
 
