@@ -53,6 +53,7 @@ public class ForgetPasswordGUI extends JPanel {
                         // Compare the fetched data with the inputted values
                         if (inputEmail.equals(fetchedEmail)) {
                             JOptionPane.showMessageDialog(null, "Email and phone matched!");
+                            //cardLayout.show(cardPanel, )
                         } else {
                             JOptionPane.showMessageDialog(null, "Email and phone do not match!");
                         }
