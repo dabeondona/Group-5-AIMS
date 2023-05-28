@@ -208,7 +208,6 @@ public class Calendar extends JPanel{
             ex.printStackTrace();
         }
     }
-
     
     private void viewEvents(int day) {
         try {
