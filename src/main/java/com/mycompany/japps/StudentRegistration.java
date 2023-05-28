@@ -44,47 +44,54 @@ public class StudentRegistration extends JPanel{
 
                 
                 Connection connection = null;
-                try {
-                    String url = "jdbc:mysql://localhost:3306/dbHelix";
-                    String username = "root";
-                    String password = "";
+                
+                if(isFormValid()){
+                    try {
+                        String url = "jdbc:mysql://localhost:3306/dbHelix";
+                        String username = "root";
+                        String password = "";
 
-                    connection = DriverManager.getConnection(url, username, password);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    // Handle connection error
-                    return;
+                        connection = DriverManager.getConnection(url, username, password);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                        // Handle connection error
+                        return;
+                    }
+
+                    // Prepare SQL statement
+                    String sql = "INSERT INTO `tblsttudent` (department, program, yearLevel, register_id) VALUES(?, ?, ?, ?)";
+
+                    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                        // Bind input values to the prepared statement
+                        statement.setString(1, cbbDepartment.getSelectedItem().toString());
+                        statement.setString(2, cbbProgram.getSelectedItem().toString());
+                        statement.setString(3, cbbYearLevel.getSelectedItem().toString());
+                        statement.setString(4, register_id);
+
+                        // Execute the SQL statement
+                        statement.executeUpdate();
+
+                        // Close the statement and connection
+                        statement.close();
+                        connection.close();
+
+                        // Provide feedback to the user (e.g., success message)
+                        JOptionPane.showMessageDialog(panel, "Data inserted successfully!");
+
+                        // Insert the last name and student ID into tbluser
+                        insertIntoTblUser(lastName, studentId);
+
+                        // Perform any additional actions or navigate to the next card in the CardLayout
+                        cardLayout.show(cardPanel, "login");
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                        // Handle SQL error
+                    }
+                } else{
+                    JOptionPane.showMessageDialog(panel, "Please fill in all required fields.");
+
                 }
-
-                // Prepare SQL statement
-                String sql = "INSERT INTO `tblsttudent` (department, program, yearLevel, register_id) VALUES(?, ?, ?, ?)";
-
-                try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                    // Bind input values to the prepared statement
-                    statement.setString(1, cbbDepartment.getSelectedItem().toString());
-                    statement.setString(2, cbbProgram.getSelectedItem().toString());
-                    statement.setString(3, cbbYearLevel.getSelectedItem().toString());
-                    statement.setString(4, register_id);
-
-                    // Execute the SQL statement
-                    statement.executeUpdate();
-
-                    // Close the statement and connection
-                    statement.close();
-                    connection.close();
-
-                    // Provide feedback to the user (e.g., success message)
-                    JOptionPane.showMessageDialog(panel, "Data inserted successfully!");
-
-                    // Insert the last name and student ID into tbluser
-                    insertIntoTblUser(lastName, studentId);
-
-                    // Perform any additional actions or navigate to the next card in the CardLayout
-                    cardLayout.show(cardPanel, "login");
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    // Handle SQL error
-                }
+                
             }
         });
         
@@ -299,6 +306,16 @@ public class StudentRegistration extends JPanel{
 
         return id;
     }
+    
+    private boolean isFormValid() {
+        if (cbbDepartment.getSelectedIndex() == -1 || cbbDepartment.getSelectedIndex() == 0 ||
+                cbbProgram.getSelectedIndex() == -1 || cbbProgram.getSelectedIndex() == 0 ||
+                cbbYearLevel.getSelectedIndex() == -1 || cbbYearLevel.getSelectedIndex() == 0) {
+            return false;
+        }
+        return true;
+    }
+
 
 
     

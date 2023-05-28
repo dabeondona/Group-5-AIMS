@@ -61,69 +61,77 @@ public class RegistrationType extends JPanel {
         btnNext.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 Connection connection = null;
-                try {
+                if(isFormValid()){
+                    try {
                     String url = "jdbc:mysql://localhost:3306/dbHelix";
                     String username = "root";
                     String password = "";
 
                     connection = DriverManager.getConnection(url, username, password);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    // Handle connection error
-                    return;
-                }
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                        // Handle connection error
+                        return;
+                    }
 
-                // Prepare SQL statement
-                String sql = "INSERT INTO `tblregister` (`lastName`, `firstName`, `middleName`, `suffix`, `homeAddress`, `region`, `province`, `municipality`, `contactNumber`, `dateOfBirth`, `placeOfBirth`, `maritalStatus`, `email`, `religion`, `citizenship`,  `bloodType`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    // Prepare SQL statement
+                    String sql = "INSERT INTO `tblregister` (`lastName`, `firstName`, `middleName`, `suffix`, `homeAddress`, `region`, `province`, `municipality`, `contactNumber`, `dateOfBirth`, `placeOfBirth`, `maritalStatus`, `email`, `religion`, `citizenship`,  `bloodType`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-                try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                    // Bind input values to the prepared statement
-                    statement.setString(1, tfLastName.getText());
-                    statement.setString(2, tfFirstName.getText());
-                    statement.setString(3, tfMiddleName.getText());
-                    statement.setString(4, tfSuffix.getText());
-                    statement.setString(5, tfHomeAddress.getText());
-                    statement.setString(6, cbbRegion.getSelectedItem().toString());
-                    statement.setString(7, cbbProvince.getSelectedItem().toString());
-                    statement.setString(8, cbbMunicipality.getSelectedItem().toString());
-                    //statement.setString(9, cbbBarangay.getSelectedItem().toString());
-                    statement.setString(9, tfContactNumber.getText());
-                    statement.setString(10, tfDateOfBirth.getText());
-                    statement.setString(11, tfPlaceOfBirth.getText());
-                    statement.setString(12, cbbMaritalStatus.getSelectedItem().toString());
-                    statement.setString(13, tfEmail.getText());
-                    statement.setString(14, tfReligion.getText());
-                    statement.setString(15, tfCitizenship.getText());
-                    statement.setString(16, cbbBloodType.getSelectedItem().toString());
+                    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                        // Bind input values to the prepared statement
+                        statement.setString(1, tfLastName.getText());
+                        statement.setString(2, tfFirstName.getText());
+                        statement.setString(3, tfMiddleName.getText());
+                        statement.setString(4, tfSuffix.getText());
+                        statement.setString(5, tfHomeAddress.getText());
+                        statement.setString(6, cbbRegion.getSelectedItem().toString());
+                        statement.setString(7, cbbProvince.getSelectedItem().toString());
+                        statement.setString(8, cbbMunicipality.getSelectedItem().toString());
+                        //statement.setString(9, cbbBarangay.getSelectedItem().toString());
+                        statement.setString(9, tfContactNumber.getText());
+                        statement.setString(10, tfDateOfBirth.getText());
+                        statement.setString(11, tfPlaceOfBirth.getText());
+                        statement.setString(12, cbbMaritalStatus.getSelectedItem().toString());
+                        statement.setString(13, tfEmail.getText());
+                        statement.setString(14, tfReligion.getText());
+                        statement.setString(15, tfCitizenship.getText());
+                        statement.setString(16, cbbBloodType.getSelectedItem().toString());
 
-                    // Execute the SQL statement
-                    statement.executeUpdate();
+                        // Execute the SQL statement
+                        statement.executeUpdate();
 
-                    // Close the statement and connection
-                    statement.close();
-                    connection.close();
+                        // Close the statement and connection
+                        statement.close();
+                        connection.close();
 
-                    // Provide feedback to the user (e.g., success message)
-                    JOptionPane.showMessageDialog(panel, "Data inserted successfully!");
+                        // Provide feedback to the user (e.g., success message)
+                        JOptionPane.showMessageDialog(panel, "Data inserted successfully!");
 
-                    // Perform any additional actions or navigate to the next card in the CardLayout
-                    cardLayout.show(cardPanel, "adminReg"); 
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    // Handle SQL error
-                }
-                
-                if (cbbType.getSelectedIndex() != -1) {
+                        // Perform any additional actions or navigate to the next card in the CardLayout
+                        cardLayout.show(cardPanel, "adminReg"); 
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                        // Handle SQL error
+                    }
+                    
+                    if (cbbType.getSelectedIndex() != -1) {
                     String selectedOption = cbbType.getSelectedItem().toString();
 
-                    if (selectedOption.equals("Student")) {
-                        cardLayout.show(cardPanel, "studentReg");
-                    } else if (selectedOption.equals("Admin")) {
-                        cardLayout.show(cardPanel, "adminReg");
-                    } else if(selectedOption.equals("")){
-                        JOptionPane.showMessageDialog(panel, "Select type!");
+                        if (selectedOption.equals("Student")) {
+                            cardLayout.show(cardPanel, "studentReg");
+                        } else if (selectedOption.equals("Admin")) {
+                            cardLayout.show(cardPanel, "adminReg");
+                        } else if(selectedOption.equals("")){
+                            JOptionPane.showMessageDialog(panel, "Select type!");
+                        }
                     }
+                } else{
+                                JOptionPane.showMessageDialog(panel, "Please fill in all required fields.");
+
                 }
+                
+                
+                
                 
             }
         });
@@ -265,84 +273,6 @@ public class RegistrationType extends JPanel {
         return panel;
     }
     
-    public JPanel createAddressPnl(){
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(6,4));
-        panel.setBackground(Japps.getJPanelColor());
-        
-        //labels
-        JLabel lblHomeAddress = new JLabel("Home Address:");
-        lblHomeAddress.setForeground(Color.WHITE);
-        panel.add(lblHomeAddress);
-        JLabel lblRegion = new JLabel("Region:");
-        lblRegion.setForeground(Color.WHITE);
-        panel.add(lblRegion);
-        JLabel lblProvince = new JLabel("Province:");
-        lblProvince.setForeground(Color.WHITE);
-        panel.add(lblProvince);
-        JLabel lblMunicipality = new JLabel("Municipality:");
-        lblMunicipality.setForeground(Color.WHITE);
-        panel.add(lblMunicipality);
-        
-        //inputs
-        tfHomeAddress = new PillTextField(10);
-        panel.add(tfHomeAddress);
-        cbbRegion = new PillComboBox(strRegion());
-        panel.add(cbbRegion);
-        cbbProvince = new PillComboBox(strRegion());
-        panel.add(cbbProvince);
-        cbbMunicipality = new PillComboBox(strRegion());
-        panel.add(cbbMunicipality);
-        
-        JLabel lblContactNumber = new JLabel("Contact Number: ");
-        lblContactNumber.setForeground(Color.WHITE);
-        panel.add(lblContactNumber);
-        JLabel lblDateOfBirth = new JLabel("Date of Birth:");
-        lblDateOfBirth.setForeground(Color.WHITE);
-        panel.add(lblDateOfBirth);
-        JLabel lblPlaceOfBirth = new JLabel("Place of Birth:");
-        lblPlaceOfBirth.setForeground(Color.WHITE);
-        panel.add(lblPlaceOfBirth);
-        JLabel lblMaritalStatus = new JLabel("Marital Status: ");
-        lblMaritalStatus.setForeground(Color.WHITE);
-        panel.add(lblMaritalStatus);
-        
-        //row2
-        JTextField tfContactNumber = new PillTextField(10);
-        panel.add(tfContactNumber);
-        JTextField tfDateOfBirth = new PillTextField(10);
-        panel.add(tfDateOfBirth);
-        JTextField tfPlaceOfBirth = new PillTextField(10);
-        panel.add(tfPlaceOfBirth);
-        JComboBox cbbMaritalStatus = new PillComboBox(strMaritalStatus());
-        panel.add(cbbMaritalStatus);
-        
-        //row3
-        JLabel lblEmail = new JLabel("Email:");
-        lblEmail.setForeground(Color.WHITE);
-        panel.add(lblEmail);
-        JLabel lblReligion = new JLabel("Religion:");
-        lblReligion.setForeground(Color.WHITE);
-        panel.add(lblReligion);
-        JLabel lblCitizenship = new JLabel("Citizenship");
-        lblCitizenship.setForeground(Color.WHITE);
-        panel.add(lblCitizenship);
-        JLabel lblBloodType = new JLabel("Blood Type:");
-        lblBloodType.setForeground(Color.WHITE);
-        panel.add(lblBloodType);
-        
-        //row 4
-        JTextField tfEmail = new PillTextField(10);
-        panel.add(tfEmail);
-        JTextField tfReligion = new PillTextField(10);
-        panel.add(tfReligion);
-        JTextField tfCitizenship = new PillTextField(10);
-        panel.add(tfCitizenship);
-        JComboBox cbbBloodType = new PillComboBox(strBloodType());
-        panel.add(cbbBloodType);
-        
-        return panel;
-    }
     
 
     
@@ -424,5 +354,27 @@ public class RegistrationType extends JPanel {
             "O Positive"
         };
         return blood;
+    }
+    
+    private boolean isFormValid() {
+        if (tfLastName.getText().isEmpty() ||
+                tfFirstName.getText().isEmpty() ||
+                tfMiddleName.getText().isEmpty() ||
+                tfSuffix.getText().isEmpty() ||
+                tfHomeAddress.getText().isEmpty() ||
+                cbbRegion.getSelectedIndex() == -1 || cbbRegion.getSelectedIndex() == 0 ||
+                cbbProvince.getSelectedIndex() == -1 || cbbProvince.getSelectedIndex() == 0 ||
+                cbbMunicipality.getSelectedIndex() == -1 || cbbMunicipality.getSelectedIndex() == 0 ||
+                tfContactNumber.getText().isEmpty() ||
+                tfDateOfBirth.getText().isEmpty() ||
+                tfPlaceOfBirth.getText().isEmpty() ||
+                cbbMaritalStatus.getSelectedIndex() == -1 || cbbMaritalStatus.getSelectedIndex() == 0 ||
+                tfEmail.getText().isEmpty() ||
+                tfReligion.getText().isEmpty() ||
+                tfCitizenship.getText().isEmpty() ||
+                cbbBloodType.getSelectedIndex() == -1 || cbbBloodType.getSelectedIndex() == 0) {
+            return false;
+        }
+        return true;
     }
 }

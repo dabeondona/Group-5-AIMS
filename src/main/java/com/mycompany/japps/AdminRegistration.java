@@ -38,48 +38,55 @@ public class AdminRegistration extends JPanel {
                 String registerId = String.format("%d", retrieveRegisterIds());
                 String lastName = retrieveLastName();
                 String adminId = retrieveAdminId();
-
-                try {
-                    String url = "jdbc:mysql://localhost:3306/dbHelix";
-                    String username = "root";
-                    String password = "";
-
-                    connection = DriverManager.getConnection(url, username, password);
-
-                    // Prepare SQL statement
-                    String sql = "INSERT INTO tbladmin (jobTitle, position, institutionalEmail, register_id) VALUES (?, ?, ?, ?)";
-
-                    try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                        // Bind input values to the prepared statement
-                        statement.setString(1, tfJobTitle.getText());
-                        statement.setString(2, tfPosition.getText());
-                        statement.setString(3, tfInstitutionalEmail.getText());
-                        statement.setString(4, registerId);
-
-                        // Execute the SQL statement
-                        statement.executeUpdate();
-
-                        // Provide feedback to the user (e.g., success message)
-                        JOptionPane.showMessageDialog(panel, "Data inserted successfully!");
-
-                        insertIntoTblUser(lastName, adminId);
-
-                        // Perform any additional actions or navigate to the next card in the CardLayout
-                        cardLayout.show(cardPanel, "login");
-                    }
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    // Handle SQL error
-                } finally {
+                
+                if(isFormValid()){
                     try {
-                        if (connection != null) {
-                            connection.close();
+                        String url = "jdbc:mysql://localhost:3306/dbHelix";
+                        String username = "root";
+                        String password = "";
+
+                        connection = DriverManager.getConnection(url, username, password);
+
+                        // Prepare SQL statement
+                        String sql = "INSERT INTO tbladmin (jobTitle, position, institutionalEmail, register_id) VALUES (?, ?, ?, ?)";
+
+                        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                            // Bind input values to the prepared statement
+                            statement.setString(1, tfJobTitle.getText());
+                            statement.setString(2, tfPosition.getText());
+                            statement.setString(3, tfInstitutionalEmail.getText());
+                            statement.setString(4, registerId);
+
+                            // Execute the SQL statement
+                            statement.executeUpdate();
+
+                            // Provide feedback to the user (e.g., success message)
+                            JOptionPane.showMessageDialog(panel, "Data inserted successfully!");
+
+                            insertIntoTblUser(lastName, adminId);
+
+                            // Perform any additional actions or navigate to the next card in the CardLayout
+                            cardLayout.show(cardPanel, "login");
                         }
                     } catch (SQLException ex) {
                         ex.printStackTrace();
-                        // Handle connection closing error
+                        // Handle SQL error
+                    } finally {
+                        try {
+                            if (connection != null) {
+                                connection.close();
+                            }
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                            // Handle connection closing error
+                        }
                     }
+                } else{
+                     JOptionPane.showMessageDialog(panel, "Please fill in all required fields.");
+
                 }
+
+                
             }
         });
 
@@ -294,4 +301,14 @@ public class AdminRegistration extends JPanel {
 
         return id;
     }
+    
+    private boolean isFormValid() {
+        if (tfJobTitle.getText().isEmpty() ||
+                tfPosition.getText().isEmpty() ||
+                tfInstitutionalEmail.getText().isEmpty()) {
+            return false;
+        }
+        return true;
+    }           
+               
 }
