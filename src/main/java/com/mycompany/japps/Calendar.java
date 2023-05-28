@@ -162,16 +162,34 @@ public class Calendar extends JPanel{
         }
 
         public void actionPerformed(ActionEvent e) {
-            // Open a dialog to add an event for the selected day
-            String event = JOptionPane.showInputDialog(Calendar.this, "Add event for day " + day + ":");
-            if (event != null && !event.isEmpty()) {
-                // Add the event to the database
-                addEventToDatabase(day, event);
-                JOptionPane.showMessageDialog(Calendar.this, "Event added: " + event);
-                updateDayButtons(); // Refresh the calendar view
+            String[] options = {"View Events", "Add Event", "Update Event", "Delete Event"};
+            int choice = JOptionPane.showOptionDialog(Calendar.this, "Select an action for day " + day + ":", "Options",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+
+            switch (choice) {
+                case 0:
+                    viewEvents(day);
+                    break;
+                case 1:
+                    String event = JOptionPane.showInputDialog(Calendar.this, "Add event for day " + day + ":");
+                    if (event != null && !event.isEmpty()) {
+                        addEventToDatabase(day, event);
+                        JOptionPane.showMessageDialog(Calendar.this, "Event added: " + event);
+                        updateDayButtons();
+                    }
+                    break;
+                case 2:
+                    updateEvent(day);
+                    break;
+                case 3:
+                    deleteEvent(day);
+                    break;
+                default:
+                    break;
             }
         }
     }
+
     
     private void addEventToDatabase(int day, String event) {
         try {
@@ -191,6 +209,113 @@ public class Calendar extends JPanel{
         }
     }
     
+    private void viewEvents(int day) {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbhelix", "root", "");
+            String query = "SELECT event FROM tblcalendar WHERE day = ? AND month = ? AND year = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, day);
+            statement.setInt(2, currentMonth + 1); // Month in Calendar starts from 0, so add 1
+            statement.setInt(3, currentYear);
+            ResultSet resultSet = statement.executeQuery();
+
+            StringBuilder events = new StringBuilder();
+            while (resultSet.next()) {
+                String event = resultSet.getString("event");
+                events.append(event).append("\n");
+            }
+
+            if (events.length() > 0) {
+                JOptionPane.showMessageDialog(Calendar.this, "Events for day " + day + ":\n" + events.toString());
+            } else {
+                JOptionPane.showMessageDialog(Calendar.this, "No events found for day " + day);
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    private void updateEvent(int day) {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbhelix", "root", "");
+            String query = "SELECT event FROM tblcalendar WHERE day = ? AND month = ? AND year = ?";
+            PreparedStatement selectStatement = connection.prepareStatement(query);
+            selectStatement.setInt(1, day);
+            selectStatement.setInt(2, currentMonth + 1); // Month in Calendar starts from 0, so add 1
+            selectStatement.setInt(3, currentYear);
+            ResultSet resultSet = selectStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String currentEvent = resultSet.getString("event");
+                String newEvent = JOptionPane.showInputDialog(Calendar.this, "Update event for day " + day + ":", currentEvent);
+
+                if (newEvent != null && !newEvent.isEmpty()) {
+                    String updateQuery = "UPDATE tblcalendar SET event = ? WHERE day = ? AND month = ? AND year = ?";
+                    PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
+                    updateStatement.setString(1, newEvent);
+                    updateStatement.setInt(2, day);
+                    updateStatement.setInt(3, currentMonth + 1); // Month in Calendar starts from 0, so add 1
+                    updateStatement.setInt(4, currentYear);
+                    updateStatement.executeUpdate();
+                    updateStatement.close();
+
+                    JOptionPane.showMessageDialog(Calendar.this, "Event updated: " + newEvent);
+                }
+            } else {
+                JOptionPane.showMessageDialog(Calendar.this, "No event found for day " + day);
+            }
+
+            resultSet.close();
+            selectStatement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    private void deleteEvent(int day) {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbhelix", "root", "");
+            String query = "SELECT event FROM tblcalendar WHERE day = ? AND month = ? AND year = ?";
+            PreparedStatement selectStatement = connection.prepareStatement(query);
+            selectStatement.setInt(1, day);
+            selectStatement.setInt(2, currentMonth + 1); // Month in Calendar starts from 0, so add 1
+            selectStatement.setInt(3, currentYear);
+            ResultSet resultSet = selectStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String event = resultSet.getString("event");
+                int choice = JOptionPane.showConfirmDialog(Calendar.this, "Delete event:\n" + event, "Confirmation", JOptionPane.YES_NO_OPTION);
+
+                if (choice == JOptionPane.YES_OPTION) {
+                    String deleteQuery = "DELETE FROM tblcalendar WHERE day = ? AND month = ? AND year = ?";
+                    PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery);
+                    deleteStatement.setInt(1, day);
+                    deleteStatement.setInt(2, currentMonth + 1); // Month in Calendar starts from 0, so add 1
+                    deleteStatement.setInt(3, currentYear);
+                    deleteStatement.executeUpdate();
+                    deleteStatement.close();
+
+                    JOptionPane.showMessageDialog(Calendar.this, "Event deleted: " + event);
+                }
+            } else {
+                JOptionPane.showMessageDialog(Calendar.this, "No event found for day " + day);
+            }
+
+            resultSet.close();
+            selectStatement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+
 
 
 
