@@ -45,15 +45,9 @@ public class Japps extends JFrame {
             public void run() {
                 new Japps();
             }
-        });
-        //  new SettingsScreen(cardPanel, cardLayout);
+        }); 
+       // new TestClass();
        }
-    
-    /*
-    *
-    * ---------------------------------------------------------------------------------------------------------------------------
-    *
-    */
     
     private void CardPanel() {
         cardPanel = new JPanel();
@@ -81,7 +75,10 @@ public class Japps extends JFrame {
         cardPanel.add(new Calendar(cardPanel, cardLayout), "calendarPnl");
         
         cardPanel.add(new StudentCalendar(cardPanel, cardLayout), "studentCalendarPnl");
+        
+        // -----------------------------------------------------------------------------------------
         cardPanel.add(new AdminNewsletter(cardPanel, cardLayout), "adminnewsletterPnl");
+        cardPanel.add(new AdminNewsletterInsert(cardPanel, cardLayout), "adminnewsletterinsertPnl");
        }
 
     

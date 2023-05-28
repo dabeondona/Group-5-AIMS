@@ -1,6 +1,7 @@
 package com.mycompany.japps;
 import static com.mycompany.japps.Japps.cardPanel;
 import javax.swing.*;
+import com.mycompany.japps.Session;
 import java.awt.event.*;
 import java.awt.*;
 import java.sql.*;
@@ -162,12 +163,14 @@ public class LoginPage extends JPanel{
             statement.setString(1, username);
 
             ResultSet resultSet = statement.executeQuery();
+           
 
             if (resultSet.next()) {
                 String storedPassword = resultSet.getString("password");
+                
                 if (password.equals(storedPassword)) {
-                    resultSet.getInt("id");
-                    Session.setSessionToken(resultSet.getInt("id"));
+                    int id = resultSet.getInt("id");
+                    Session.setSessionToken(id);
                     return true;
                 }
             }
@@ -198,8 +201,8 @@ public class LoginPage extends JPanel{
             int isAdminValue = resultSet.getInt("isAdmin");
 
             if (password.equals(storedPassword) && isAdminValue == 1) {
-                int userId = resultSet.getInt("id");
-                Session.setSessionToken(userId);
+                int id = resultSet.getInt("id");
+                Session.setSessionToken(id);
                 return true;
             }
         }

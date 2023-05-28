@@ -1,8 +1,8 @@
-
 package com.mycompany.japps;
 
 public class Session {
-    private static int sessionToken;
+    
+    private static int sessionToken = 0;
     
     public static void setSessionToken(int id) {
         sessionToken = id;
