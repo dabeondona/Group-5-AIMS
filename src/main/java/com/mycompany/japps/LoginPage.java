@@ -9,6 +9,7 @@ import java.sql.*;
 public class LoginPage extends JPanel{
     
     
+    
     public LoginPage(JPanel cardPanel, CardLayout cardLayout) {
      JPanel loginPagePnl = createLoginPagePnl();   
      JPanel northPnl = createNorthPnl();
@@ -83,6 +84,7 @@ public class LoginPage extends JPanel{
                 String usernameComparison = usernameTextField.getText();
                 String password = new String(usernamePWField.getPassword());
                 Username.setUsernameToken(username);
+                System.out.println(username);
  
                 if(login(username, password) && usernameComparison.startsWith("10")) {
                     cardLayout.show(cardPanel, "adminnewsletterPnl");
@@ -165,7 +167,7 @@ public class LoginPage extends JPanel{
                 String storedPassword = resultSet.getString("password");
                 
                 if (password.equals(storedPassword)) {
-                    Username.setUsernameToken(username);
+                    
                     int id = resultSet.getInt("id");
                     Session.setSessionToken(id);
                     return true;

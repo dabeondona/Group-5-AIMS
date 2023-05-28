@@ -12,6 +12,7 @@ public class Username {
     private static int username;
     
     public static void setUsernameToken(int uname) {
+        System.out.println(uname);
         username = uname;
     }
     

@@ -19,21 +19,22 @@ import java.util.Map;
  * @author alest
  */
 public class Profile extends JPanel{
-    private JLabel nameLabel;
-    private JLabel departmentLabel;
-    private JLabel programLabel;
-    private JLabel yearLabel;
-    private JLabel photoLabel;
-    private JButton uploadButton;
-    private JLabel bloodType;
     private JButton editButton;
     private JButton settingsButton;
     private JTextArea displayArea;
+
+    private String nameText;
+    private String departmentText;
+    private String programText;
+    private String yearText;
+    private String bloodText;
+    private String emailText;
+    private String contactNumberText;
+    private String maritalStatusText;
     
     public Profile(JPanel cardPanel, CardLayout cardLayout) {
         this.setName(Japps.getGUIName());
         this.setLayout(new BorderLayout());
-        
         
         
         this.add(new TopPanelButtons(cardPanel, cardLayout), BorderLayout.NORTH);
@@ -140,6 +141,9 @@ public class Profile extends JPanel{
         dialog.add(contactNumberCheckbox);
         dialog.add(bloodTypeCheckbox);
         dialog.add(maritalStatusCheckbox);
+        
+        fetchData();
+
 
         JButton applyButton = new JButton("Apply");
         applyButton.addActionListener(new ActionListener() {
@@ -162,32 +166,68 @@ public class Profile extends JPanel{
         StringBuilder displayText = new StringBuilder();
 
         if (showName) {
-            displayText.append("Name: John Doe\n");
+            displayText.append("Last Name: ").append(nameText).append("\n");
         }
         if (showDepartment) {
-            displayText.append("Department: Computer Science\n");
+            displayText.append("Department: ").append(departmentText).append("\n");
         }
         if (showProgram) {
-            displayText.append("Program: Bachelor of Science\n");
+            displayText.append("Program: ").append(programText).append("\n");
         }
         if (showYearLevel) {
-            displayText.append("Year Level: 3rd Year\n");
+            displayText.append("Year Level: ").append(yearText).append("\n");
         }
         if (showEmail) {
-            displayText.append("Email: johndoe@example.com\n");
+            displayText.append("Email: ").append(emailText).append("\n");
         }
         if (showContactNumber) {
-            displayText.append("Contact Number: 123-456-7890\n");
+            displayText.append("Contact Number: ").append(contactNumberText).append("\n");
         }
         if (showBloodType) {
-            displayText.append("Blood Type: A+\n");
+            displayText.append("Blood Type: ").append(bloodText).append("\n");
         }
         if (showMaritalStatus) {
-            displayText.append("Marital Status: Single\n");
+            displayText.append("Marital Status: ").append(maritalStatusText).append("\n");
         }
 
         displayArea.setText(displayText.toString());
     }
+    
+    public void fetchData() {
+        try {
+            // Establish a database connection
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbhelix", "root", "");
+            System.out.println("cxvdsf"+Username.getUsernameToken());
+            // Create a statement
+            PreparedStatement statement = connection.prepareStatement("SELECT lastName, department, program,yearLevel, bloodType,email, contactNumber, maritalStatus FROM tblsttudent as s, tblregister as r, tbluser as u WHERE r.register_id = s.register_id AND s.studentID = u.username AND  u.username = ?");
+            statement.setInt(1, Username.getUsernameToken());
+
+            // Execute a query to fetch the data
+            ResultSet resultSet = statement.executeQuery();
+
+            // Check if there is a result
+            if (resultSet.next()) {
+                // Retrieve the values from the result set
+                nameText = resultSet.getString("lastName");
+                departmentText = resultSet.getString("department");
+                programText = resultSet.getString("program");
+                yearText = resultSet.getString("yearLevel");
+                bloodText = resultSet.getString("bloodType");
+                emailText = resultSet.getString("email");
+                contactNumberText = resultSet.getString("contactNumber");
+                maritalStatusText = resultSet.getString("maritalStatus");
+            }
+
+            // Close the resources
+            resultSet.close();
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
