@@ -76,8 +76,10 @@ public class Japps extends JFrame {
         cardPanel.add(new SupportPageSend(cardPanel, cardLayout), "supportSendPnl");
         cardPanel.add(new SupportPageView(cardPanel, cardLayout), "supportViewPnl");
         cardPanel.add(new Profile(cardPanel, cardLayout), "profilePnl");
+        cardPanel.add(new SettingsScreen(cardPanel, cardLayout), "settingsPnl");
         cardPanel.add(new Calendar(cardPanel, cardLayout), "calendarPnl");
-        }
+        cardPanel.add(new StudentCalendar(cardPanel, cardLayout), "studentCalendarPnl");
+       }
 
     
     public static String getGUIName() {

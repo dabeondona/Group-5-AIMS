@@ -62,7 +62,7 @@ public class AdminTopPanelButton extends JPanel {
         JButton calendarButton = new JButton("Calendar");
         calendarButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                cardLayout.show(cardPanel, "calendarPnl");    
+                cardLayout.show(cardPanel, "CalendarPnl");    
             }
         });
         calendarButton.setBackground(new Color(0xfcca00));
