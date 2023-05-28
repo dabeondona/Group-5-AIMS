@@ -35,13 +35,17 @@ public class TopPanelButtons extends JPanel {
         middlePnl.setBackground(Japps.getJFrameColor());
         
         // WEST
-        JLabel placeholder = new JLabel("Logo Here");
-        placeholder.setForeground(new Color(0xfcca00));
+        JButton logoIcon = new JButton(new ImageIcon("C://Users//ondon//Pictures//slogo_icon.png"));
+        logoIcon.setFocusPainted(false);
+        logoIcon.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        logoIcon.setBorder(BorderFactory.createEmptyBorder());
+        logoIcon.setBackground(Japps.getJFrameColor());
+        logoIcon.setPreferredSize(new Dimension(50,50));
         
         
         this.add(profileIconButton, BorderLayout.EAST);
         this.add(middlePnl, BorderLayout.CENTER);
-        this.add(placeholder, BorderLayout.WEST);
+        this.add(logoIcon, BorderLayout.WEST);
         this.setBackground(Japps.getJFrameColor());
     }
     

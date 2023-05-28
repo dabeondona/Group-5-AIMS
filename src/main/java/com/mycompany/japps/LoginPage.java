@@ -5,12 +5,7 @@ import com.mycompany.japps.Session;
 import java.awt.event.*;
 import java.awt.*;
 import java.sql.*;
-/**
- *
- * Codes to be used:
- * - Java JDBC
- * - https://stackoverflow.com/questions/13368103/jpanel-drop-shadow
- */
+
 public class LoginPage extends JPanel{
     
     

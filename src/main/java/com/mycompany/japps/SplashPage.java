@@ -2,18 +2,7 @@ package com.mycompany.japps;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
-/**
- * Line 23:
- * filename directory needs to be changed to the appropriate icon
- * 
- * Line 24:
- * setPreferredSize according to the appropriate icon size
- * 
- * Codes to be used:
- * - JSeparators
- * - Swing Offsets
- * - ImageIcons
- */
+
 public class SplashPage extends JPanel {
     JPanel splashPagePnl;
     JButton iconButton;
@@ -23,8 +12,11 @@ public class SplashPage extends JPanel {
      JPanel splashPagePnl = new JPanel();
      splashPagePnl.setLayout(new BorderLayout());
      
-     JButton iconButton = new JButton(new ImageIcon("C://Users//ondon//Pictures//20210619_214454.jpg"));
-     iconButton.setPreferredSize(new Dimension(100,50));
+     JButton iconButton = new JButton(new ImageIcon("C://Users//ondon//Pictures//blogo_icon.png"));
+     iconButton.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+     iconButton.setBorder(BorderFactory.createEmptyBorder());
+     iconButton.setBackground(Japps.getJFrameColor());
+     iconButton.setPreferredSize(new Dimension(300,300));
      iconButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {       
