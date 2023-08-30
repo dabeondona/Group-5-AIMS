@@ -77,50 +77,5 @@ Project Contributor(s):
   </tr>
   </thead>
   <tbody>
-  <tr>
-     <th></th>
-     <td align="left">1</td>
-     <td align="left">2</td>
-     <td align="left">3<br><b>(*)</b></td>
-     <td align="left">4</td>
-     <td align="left">5</td>
-     <td align="left">6</td>
-  </tr>
-  <tr>
-     <td align="left">7</td>
-     <td align="left">8</td>
-     <td align="left">9</td>
-     <td align="left">10<br><b>(*)</b></td>
-     <td align="left">11</td>
-     <td align="left">12</td>
-     <td align="left">13</td>
-  </tr>
-  <tr>
-     <td align="left">14</td>
-     <td align="left">15</td>
-     <td align="left">16</td>
-     <td align="left">17<br><b>(*)</b></td>
-     <td align="left">18</td>
-     <td align="left">19</td>
-     <td align="left">20</td>
-  </tr>
-  <tr>
-     <td align="left">21</td>
-     <td align="left">22</td>
-     <td align="left">23</td>
-     <td align="left">24&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>(?)</b></td>
-     <td align="left">25</td>
-     <td align="left">26</td>
-     <td align="left">27</td>
-  </tr>
-  <tr>
-     <td align="left">28</td>
-     <td align="left">29</td>
-     <td align="left">30</td>
-     <td align="left">31&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>(?)</b></th>
-     <th></th>
-     <th></th>
-     <th></th>
-  </tr>
-</tbody>
+
 </table>
