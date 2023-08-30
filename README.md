@@ -63,18 +63,9 @@ Project Contributor(s):
    > https://www.youtube.com/watch?v=UOIPS-ewFHg&pp=ygUPZ2l0IGluIG5ldGJlYW5z
 <hr>
   
- <h4 align="center">Progress Update: <b>Every Wednesday</b></h4>
  <table align="center">
  <thead>
-  <tr>
-     <th>Sunday</th>
-     <th>Monday</th>
-     <th>Tuesday</th>
-     <th>Wednesday</th>
-     <th>Thursday</th>
-     <th>Friday</th>
-     <th>Saturday</th>
-  </tr>
+
   </thead>
   <tbody>
 
