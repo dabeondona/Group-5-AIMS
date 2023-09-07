@@ -7,7 +7,6 @@ GUI Name: Helix
 <br><br>
 Project Contributor(s):
 <i> 
-- ~~Franc Rhodnin Cabusas~~
 - Anfheirne T. Cañizares
 - Dave Francis B. Ondona
 - Kheisa Selma 
